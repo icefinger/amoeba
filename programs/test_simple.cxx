@@ -8,18 +8,19 @@
 
 using namespace std;
 
+//creating the minimal class class that will use amoeba
 class my_amoeba : public amoeba {
-
 public:
   my_amoeba ()
   {
   }
   ~my_amoeba () {}
 
-  double get_value (const double_1d& list_)
+  //only get_value is absolutly required. It should return the value at the coordinates in coord_ (can be illimited in dimension)
+  double get_value (const double_1d& coord_)
   {
-    double x = list_[0]-40;
-    double y = list_[1]+44;
+    double x = coord_[0]-40;
+    double y = coord_[1]+44;
     double value=-100*exp(-x*x/7200)-100*exp(-y*y/7200);
 
     return value;
@@ -59,26 +60,27 @@ int main (int argc_, char ** argv_) {
       iarg++;
     }
 
-  //testing for 2d->1d function
+  //the return. Point is a double_1d plus a returned value from get_value
   amoeba::point result;
 
-  //for 2d needs 2x2d limits to the amoeba
-  //                       n,dim      minx,maxx     miny,maxy
+  //for 2d needs 2x2d limits to the amoeba. In this example it's a sphere 180°x360° (theta,phi)
+  //                       n,dim       minx,maxx       miny,maxy
   amoeba::double_2d limits(2,2,       -180.,180.,     -180.,180.);
 
-  //for 2d needs 3x2d legs for the amoeba
-  //                       n,dim   x1,y1    x2,y2    x3,y3
+  //for 2d, needs 3x2d legs for the amoeba
+  //                       n,dim      x1,y1        x2,y2      x3,y3
   amoeba::double_2d starts(3,2,    -100.,-100.,  100.,30.,   10.,30.);
 
-
+  //creating and putting the start data
   my_amoeba ma;
   ma.set_debug(debug);
-  ma.set_delta(0.000001,0.001);
+  //the deltas are for the resolution (1°) and the difference between the already scanned values.
+  ma.set_delta(1,1);
 
   ma.set_starts (starts);
   ma.set_limits (limits);
 
-  cout << "research of the minimum at more than 99.9999% of confidence...please wait." << endl;
+  //the result is directly returned by find_min
   result=ma.find_min ();
 
   cout << "results " << result << " in " << ma.get_counter () << " counts" << endl;
