@@ -13,3 +13,10 @@ Amoeba uses cmake. It has only the standard libraries (c++11) as dependency:
     cd build
     cmake ..
     make
+
+##Using it as external library
+No installation script is done yet. To compile with it, just configure the environement variable AMOEBA_ROOT, then add
+
+    -L${AMOEBA_ROOT}/build -lamoeba -I${AMOEBA_ROOT}/include/amoeba
+
+in your compilation commande
