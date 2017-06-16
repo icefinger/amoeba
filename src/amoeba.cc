@@ -453,16 +453,6 @@ void amoeba::point::reinit (bool min_max_)
     __val=numeric_limits<double>::max();
 }
 
-double amoeba::point::get_r () const
-{
-  double tmp=0;
-  for (auto val: *this)
-    {
-      tmp+=val*val;
-    }
-  return sqrt(tmp);
-}
-
 bool amoeba::point::operator> (const point& to_oper_) const
 {
   return (__val>to_oper_.__val);
