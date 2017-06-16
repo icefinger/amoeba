@@ -1,12 +1,9 @@
 #include <nosy.h>
 #include <cstdlib>
 #include <iostream>
-#include <TF3.h>
 #include <string>
 #include <sys/time.h>
 #include <ctime>
-#include <TH1.h>
-#include <TFile.h>
 #include <cmath>
 using namespace std;
 
@@ -31,7 +28,6 @@ int main (int argc_, char ** argv_) {
 
   bool debug=false;
   unsigned int noses=1;
-  string outfile="./test.root";
   amoeba::double_1d sigma;
   int iarg = 1;
   double sigma_val=20;
@@ -50,10 +46,6 @@ int main (int argc_, char ** argv_) {
 	  else if ((option == "-n" || option == "--noses") && iarg+1<argc_)
 	     {
 	       noses=atoi(argv_[++iarg]);
-	     }
-	   else if (option=="-o" && ++iarg<argc_)
-	     {
-	       outfile=argv_[iarg];
 	     }
 	   else if (option=="-s" )
 	     {

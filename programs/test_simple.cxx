@@ -1,12 +1,9 @@
 #include <amoeba.h>
 #include <cstdlib>
 #include <iostream>
-#include <TF2.h>
 #include <string>
 #include <sys/time.h>
 #include <ctime>
-#include <TH1.h>
-#include <TFile.h>
 #include <cmath>
 
 using namespace std;

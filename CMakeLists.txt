@@ -11,15 +11,15 @@ else()
     set(LIBSUFFIX "")
 endif()
 
-
-include(FindROOT.cmake)
+#keeping root elements for possible tests
+#include(FindROOT.cmake)
 #root for tests
 
 
-link_directories(${ROOT_LIBRARY_DIR})
-link_directories($ENV{LIBCONFIG_ROOT/lib})
+#link_directories(${ROOT_LIBRARY_DIR})
+#link_directories($ENV{LIBCONFIG_ROOT/lib})
 
-include_directories(${ROOT_INCLUDE_DIR})
+#include_directories(${ROOT_INCLUDE_DIR})
 
 
 

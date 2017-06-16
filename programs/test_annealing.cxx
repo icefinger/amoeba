@@ -30,7 +30,6 @@ int main (int argc_, char ** argv_) {
 
   bool debug=false;
   unsigned int noses=0;
-  string outfile="./test.root";
   amoeba::double_1d sigma;
   int iarg = 1;
   double sigma_val=5;
@@ -48,10 +47,6 @@ int main (int argc_, char ** argv_) {
 	   else if (option == "-n" || option == "--noses")
 	     {
 	       noses=atoi(argv_[++iarg]);
-	     }
-	   else if (option=="-o" && ++iarg<argc_)
-	     {
-	       outfile=argv_[iarg];
 	     }
 	   else if (option=="-s")
 	     {
