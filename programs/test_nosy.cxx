@@ -30,10 +30,12 @@ public:
 int main (int argc_, char ** argv_) {
 
   bool debug=false;
-  unsigned int noses=0;
+  unsigned int noses=1;
   string outfile="./test.root";
   amoeba::double_1d sigma;
   int iarg = 1;
+  double sigma_val=20;
+
   while (iarg < argc_)
     {
       string token = argv_[iarg];
@@ -55,9 +57,7 @@ int main (int argc_, char ** argv_) {
 	     }
 	   else if (option=="-s" )
 	     {
-               double sigma_val=atof(argv_[iarg]);
-               for (size_t it = 0; it<noses; it++)
-                 sigma.push_back (sigma_val);
+               sigma_val=atof(argv_[iarg]);
 	     }
 
 	  else
@@ -75,6 +75,10 @@ int main (int argc_, char ** argv_) {
 	}
       iarg++;
     }
+
+  for (size_t it = 0; it<noses; it++)
+    sigma.push_back (sigma_val);
+
 
   //testing for 2d->1d function
   amoeba::point result;

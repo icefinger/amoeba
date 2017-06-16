@@ -32,6 +32,17 @@ void annealing::__init_annealing ()
   __temperature=1.44*(__max-__min)/2;
 
   __heat_counter=numeric_limits<unsigned int>::max();
+  if (!nb_noses ())
+    {
+      double_1d starts_mean;
+      for (size_t it=0;it<PQR_size ();it++)
+        {
+          starts_mean=get_PQR (it)+starts_mean;
+        }
+      starts_mean=starts_mean/PQR_size ();
+      set_noses(starts_mean);
+    }
+  //if no base nose, creating one with the sigma based on the difference between the startpoints
   __init=true;
 }
 
@@ -40,23 +51,21 @@ bool annealing::accept (double val1_, double val2_)
   if (!__init)
     __init_annealing ();
 
-
   if (__evol)
     __evol_temperature (val1_,val2_);
 
-  if (this->get_counter()!=__heat_counter)
-    {
-      __temperature*=pow(__decrease_fact,this->get_counter()-__heat_counter);
-      __heat_counter=this->get_counter();
-    }
-  if (val1_<val2_)
-    return true;
+  if (val1_<val2_ || get_counter()==__heat_counter)
+    return false;
+
+
+  __temperature*=pow(__decrease_fact,this->get_counter()-__heat_counter);
+  __heat_counter=this->get_counter();
 
 
   std::uniform_real_distribution<double>::param_type p(0,1);
   __uniform_distribution.param(p);
   double alea=__uniform_distribution (__generator);
-  //cout << alea << ">" << (exp((val2_-val1_)/__temperature)) << endl;
+
   if (alea > exp(-(val2_-val1_)/__temperature))
     return true;
 
