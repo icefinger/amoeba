@@ -71,7 +71,7 @@ amoeba::point amoeba::find_min ( )
   __counter=0;
 
   while (  (__PQR[0].get_value () - __PQR[2].get_value () > __delta_val &&
-	    fabs(__PQR[0].get_r () - __PQR[2].get_r ()) > __delta_pos) &&
+	    fabs((__PQR[0] - __PQR[2]).get_r ()) > __delta_pos) &&
 	   __counter<1000*__PQRsize)
     {
       point M_QR=__reflectP ();
@@ -91,10 +91,8 @@ amoeba::point amoeba::find_min ( )
 
 	}
       __classify();
-      user_work ();
-      //TODO
-      // if (user_work ())
-      //   __classify();
+      if (user_work ())
+        __classify();
 
       __counter++;
 
@@ -506,7 +504,7 @@ std::ostream& operator<<(std::ostream &oss_, const amoeba::double_1d& d1_)
   size_t it=0;
   for (; it<d1_.size ()-1; it++)
     oss_<<d1_[it]<<",";
-  oss_<<d1_[++it]<<")";
+  oss_<<d1_[it]<<")";
   return oss_;
 }
 

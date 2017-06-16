@@ -12,7 +12,6 @@ nosy::nosy ()
 {
   __warn=true;
   __normal=false;
-  __sigma=NULL;
   struct timeval tv;
   gettimeofday(&tv, NULL);
 
@@ -23,29 +22,25 @@ nosy::~nosy ()
 {
 }
 
-void nosy::add_nose (const double_2d &limits_, unsigned int nb_)
+void nosy::set_noses (const double_2d &limits_)
 {
-  if (!__check_noses(limits_, nb_))
+  if (!__check_noses(limits_))
     exit (1);
 
   set_limits(limits_);
 
-  __add_nose(nb_);
+  __add_nose(limits_.size ());
 
   __normal=false;
 
   user_work ();
 }
 
-void nosy::add_nose (double *sigma_, unsigned int nb_)
+void nosy::set_noses (const double_1d& sigma_)
 {
-  if (sigma_==0)
-    return;
-
   __sigma=sigma_;
   __normal=true;
-  __add_nose(nb_);
-
+  __add_nose(sigma_.size ());
 }
 
 void nosy::__add_nose (unsigned int nb_)
@@ -58,15 +53,15 @@ void nosy::__add_nose (unsigned int nb_)
     }
 }
 
-void nosy::user_work ()
+bool nosy::user_work ()
 {
-
+  bool has_changed = false;
   for (list<point>::iterator nit=__noses.begin();
        nit!=__noses.end();
        nit++)
     {
       double_1d pos;
-      if (__normal && __sigma)
+      if (__normal && __sigma.size ())
 	{
 	  int sit=0;
 	  for (double_1d_cit lmean=get_PQR(2).begin(); lmean!=get_PQR(2).end (); lmean++)
@@ -100,12 +95,14 @@ void nosy::user_work ()
 	    accept (valit,valPQR2)))
 	{
 	  set_PQR(*nit,2);
+          has_changed = true;
 	}
     }
+  return has_changed;
 
 }
 
-bool nosy::__check_noses (const double_2d &limits_, unsigned int nb_) const
+ bool nosy::__check_noses (const double_2d &limits_) const
 {
   if (!PQR_size ())
     {
@@ -133,7 +130,7 @@ bool nosy::__check_noses (const double_2d &limits_, unsigned int nb_) const
 	}
 
     }
-  if (__warn && nb_ > PQR_size ())
+  if (__warn && limits_.size () > PQR_size ())
     clog << "WARNING: There is a lot of noses. It could burden the amoeba.\n";
 
   return true;

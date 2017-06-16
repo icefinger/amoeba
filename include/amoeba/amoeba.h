@@ -105,7 +105,7 @@ class amoeba {
  void __classify ();
  void __check_limits ();
  bool __check_starts (const double_2d &starts_) const;
- virtual void user_work () {}
+ virtual bool user_work () {return false;}
 
  private:
  double __delta_val;

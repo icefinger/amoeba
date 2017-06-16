@@ -16,7 +16,6 @@ class my_amoeba : public amoeba {
 public:
   my_amoeba ()
   {
-    fun=new TF2 ("fun","-100*exp(-((x[0]*x[0]-4))/7200)*exp(-((x[1]*x[1][1]+4))/7200)",-180,180,-180,180);
   }
   ~my_amoeba () {}
 
@@ -28,8 +27,6 @@ public:
 
     return value;
   }
-private:
-  TF2 *fun;
 };
 
 

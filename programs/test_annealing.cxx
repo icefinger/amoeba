@@ -13,44 +13,19 @@ using namespace std;
 class my_amoeba : public annealing {
 
 public:
-  my_amoeba () {f=NULL;}
+  my_amoeba () {}
   ~my_amoeba () {}
 
   double get_value (const double_1d& list_)
   {
+    double x = list_[0]-40;
+    double y = list_[1]+44;
+    double value=-100*exp(-x*x/7200)-100*exp(-y*y/7200);
 
-    if (f)
-      {
-	double_1d_cit lit=list_.begin();
-	const double &x=*lit;
-	double toreturn=exp(-(x+50)*(x+50)/4000)*((x-60)*(x-60)*sin(x))+x/100*x/100;
-	if (list_.size() >=2)
-	  {
-	    const double &y=*(++lit);
-	    toreturn+=(y-2)*(y-2);
-	    if (list_.size() >=3)
-	      {
-		const double &z=*(++lit);
-		toreturn+=(z+20)*(z+20);
-	      }
-	  }
-	return toreturn;/*
+    return value;
 
-	double *par=new double[list_.size()];
-	int dit=0;
-	for (double_1d_cit lit=list_.begin(); lit!=list_.end(); lit++)
-	  {
-	    par[dit]=*lit;
-	    dit++;
-	  }
-	double toreturn=f->EvalPar (par);
-	delete [] par;
-	return toreturn;*/
-      }
-    return 0;
   }
 
-  TF3* f;
 };
 
 
@@ -60,9 +35,8 @@ int main (int argc_, char ** argv_) {
   unsigned int noses=0;
   unsigned int loop=1;
   unsigned int dim=1;
-  double *sigma=0;
   string outfile="./test.root";
-
+  amoeba::double_1d sigma;
   int iarg = 1;
   while (iarg < argc_)
     {
@@ -93,10 +67,9 @@ int main (int argc_, char ** argv_) {
 	     }
 	   else if (option=="-s")
 	     {
-	       sigma=new double[dim];
 	       for (unsigned int it=0; it < dim &&  ++iarg<argc_; it++)
 		 {
-		   sigma[it]=atof(argv_[iarg]);
+		   sigma.push_back(atof(argv_[iarg]));
 		 }
 	     }
 
@@ -186,33 +159,16 @@ int main (int argc_, char ** argv_) {
   ma.set_debug(debug);
   ma.set_warn(false);
   ma.set_delta(1e-7,1e-7);
-  ma.f=f;
-
-  double minz=0,miny=0,minx=0;
-  if (dim >= 3)
-    f->GetMinimumXYZ(minx,miny,minz);
-  if (dim == 2)
-    f->GetMinimumXY(minx,miny);
-  if (dim <= 1)
-    minx=f->GetMinimumX();
-
-  unsigned int max_noses=noses;
-  unsigned int min_noses=noses;
-  if (loop>1)
-    {
-      min_noses=0;
-      max_noses=100;
-    }
 
   cout << "research of the minimum at more than 99.9999% of confidence...please wait." << endl;
   double sureminx=0, sureminy=0, sureminz=0;
 
   ma.set_starts (starts);
 
-  if (sigma!=0)
-    ma.add_nose (sigma,20000);
+  if (sigma.size ())
+    ma.set_noses (sigma);
   else
-    ma.add_nose (limits,20000);
+    ma.set_noses (limits);
 
   result=ma.find_min ();
   sureminx=result.front ();
@@ -223,95 +179,5 @@ int main (int argc_, char ** argv_) {
     if ( result.size()>=2)
       sureminy=*(--rit);
   }
-  ma.rm_noses();
-
-
-
-  cout << endl;
-
-  for (noses=min_noses; noses<=max_noses; noses++)
-    {
-      if (sigma!=0)
-	ma.add_nose (sigma,noses-ma.nb_noses());
-      else
-	ma.add_nose (limits,noses-ma.nb_noses());
-      struct timeval tv;
-      gettimeofday(&tv, NULL);
-
-      double success=0;
-      long elapsed_time=1000000*tv.tv_sec+tv.tv_usec;
-      for (unsigned int lit=0; lit<loop; lit++)
-	{
-          ma.set_starts (starts);
-	  if (sigma==0)
-            ma.set_limits (limits);
-
-	  result=ma.find_min ();
-
-	  amoeba::double_1d_cit rit=result.begin();
-
-	  if ((int)(*rit) == (int)(sureminx+.5) &&
-	      (result.size()<2 || (int)(*(++rit)+.5) == (int)(sureminy+.5)) &&
-	      (result.size()<3 || (int)(*(++rit)+.5) == (int)(sureminz+.5)))
-	      success+=1;
-
-	}
-      gettimeofday(&tv, NULL);
-      elapsed_time=1000000*tv.tv_sec+tv.tv_usec-elapsed_time;
-      if (loop>1)
-	{
-	  htime->Fill (noses,((double)elapsed_time)/loop);
-	  hefficace->Fill(noses, success/loop*100);
-	  cout << "\rnose nb "<< noses << "    ";cout.flush();
-	}
-    }
-
-  if (loop>1)
-    {
-      hefficace->Write ();
-      htime->Write ();
-      file->Close();
-    }
-  double* par=new double[result.size()];
-  int dit=0;
-
-  cout << "real min : " ;
-
-      par[0]=sureminx;
-      cout << par[0] << ";";
-      if (result.size()>=2)
-	{
-	  par[1]=sureminy;
-	  cout << par[1] << ";";
-	}
-      if (result.size()>=3)
-	{
-	  par[2]=sureminz;
-	  cout << par[2] << ";";
-	}
-
-      cout<< " f(pos)="<<ma.f->EvalPar(par)<<")"<<endl;
-
-  cout << "amoeba min : ";
-
-  for (amoeba::double_1d_cit rit=result.begin();
-       rit!=result.end();
-       rit++)
-    {
-      par[dit]=*rit;
-      dit++;
-      cout << *rit<<';';
-    }
-  cout << '='<< result.get_value() << " (f(pos)=" <<ma.f->EvalPar(par)<<")"<<endl;
-
-  cout << "Minuit min : "<< minx <<";";
-  if (dim>=2)
-    cout << miny <<";";
-  if (dim>=3)
-    cout << minz <<";";
-
-  cout<<"="<< ma.f->GetMinimum()<<endl;
-  cout << "in " << ma.get_counter () << " steps"<<endl;
-  delete [] par;
   return 0;
 }
