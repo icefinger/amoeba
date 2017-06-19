@@ -29,7 +29,7 @@ This minimizer allows to find quickly a minimum, with a minimization of number o
 
 as showed in the following picture, this function has multiple minimums. If the starts points of the amoeba is not too far enough in comparison of the minimum wells sizes, it has a good probability to do not fall inside. This example find the minimum in about 40 steps with a precision of 1°. This method is optimal for minimization from which we already have information and/or for prefit cases.
 
-![Function used for the simple amoeba example](./doc/images/illustre-simple.png)
+![Function used for the annealing example](./doc/images/illustre-simple.png)
 
 ###Annealing and nosy amoeba
 This, still under improvment, method uses first a random scan of the map with an arbitrary number of scanners (called noses). This scan can be homogeneous, or distributed with a normal distribution around the current minimum point.
@@ -45,4 +45,6 @@ The simple amoeba is generally unable to find the real minimum and will tend to 
 
 The -n gives a number of noses, -s the sigma of the normal distribution around the current minimum and -minmax define the temperature differential we want to use in this case (400°, the annealing algorithm has been tune in a way that the order of magnitude between the minimum and maximum is a good value). -s 70 is the order of magnitude of the x-y size minimum wells, optimizing the probability to escape from it. The
 
-![Function used for the simple amoeba example](./doc/images/proba-annealing.png)
+![Probability to find the real minimum and wrong minimum](./doc/images/proba-annealing.png)
+
+As can be seen, the probability to find the wrong minimum is ~25%. Rerun a fair enough time the algorithm permit to reduce significantly this probability.
