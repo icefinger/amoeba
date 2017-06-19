@@ -36,7 +36,7 @@ class nosy : public amoeba
   virtual double get_value (const double_1d&) = 0;
   bool __check_noses (const double_2d& limits_) const;
   bool user_work ();
-  virtual bool accept (double, double) {return false;}
+  virtual bool accept (const point&, const point&) {return false;}
 
  private:
   std::list<point> __noses;

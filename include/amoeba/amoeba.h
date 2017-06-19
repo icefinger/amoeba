@@ -129,7 +129,11 @@ class amoeba {
  void __classify ();
  void __check_limits ();
  bool __check_starts (const double_2d &starts_) const;
+
+ //for inerited classes. For complementary works in find_min
  virtual bool user_work () {return false;}
+ //for checking if it goes on with find mins
+ virtual bool user_accept_ending () {return true;}
 
  private:
  double __delta_val;

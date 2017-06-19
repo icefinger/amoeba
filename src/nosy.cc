@@ -88,16 +88,15 @@ bool nosy::user_work ()
       double rnit=(*nit).get_r ();
       double rPQR2=get_PQR(2).get_r();
       double rPQR0=get_PQR(0).get_r();
-      double valit=(*nit).get_value();
-      double valPQR2=get_PQR(2).get_value();
       if ( fabs(rnit - rPQR2) > fabs(rPQR2-rPQR0) &&
 	   ((*nit).get_value()<get_PQR(2).get_value () ||
-	    accept (valit,valPQR2)))
+	    accept (*nit,get_PQR(2))))
 	{
 	  set_PQR(*nit,2);
           has_changed = true;
 	}
     }
+
   return has_changed;
 
 }

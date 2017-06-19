@@ -21,7 +21,7 @@ annealing::~annealing ()
 
 void annealing::__init_annealing ()
 {
-  if (__min<=0 || __max <=0 || __min>=__max)
+  if (__min<0 || __max <=0 || __min>=__max)
     {
       __min=get_PQR(2).get_value();
       __max=get_PQR(0).get_value();
@@ -29,7 +29,9 @@ void annealing::__init_annealing ()
     }else
     __evol=false;
 
-  __temperature=1.44*(__max-__min)/2;
+  __minimal_met=get_PQR(2);
+
+  __temperature=1.44*(__max-__min)*1e2;
 
   __heat_counter=numeric_limits<unsigned int>::max();
   if (!nb_noses ())
@@ -46,30 +48,51 @@ void annealing::__init_annealing ()
   __init=true;
 }
 
-bool annealing::accept (double val1_, double val2_)
+bool annealing::accept (const point& p1_, const point& p2_)
 {
   if (!__init)
     __init_annealing ();
 
-  if (__evol)
-    __evol_temperature (val1_,val2_);
+  double val1=p1_.get_value (), val2=p2_.get_value ();
 
-  if (val1_<val2_ || get_counter()==__heat_counter)
+  if (__evol)
+    __evol_temperature (val1,val2);
+
+  if (val1<val2 || get_counter()==__heat_counter)
     return false;
 
 
   __temperature*=pow(__decrease_fact,this->get_counter()-__heat_counter);
   __heat_counter=this->get_counter();
 
-
-  std::uniform_real_distribution<double>::param_type p(0,1);
+  std::uniform_real_distribution<double>::param_type p(1,2);
   __uniform_distribution.param(p);
   double alea=__uniform_distribution (__generator);
 
-  if (alea > exp(-(val2_-val1_)/__temperature))
-    return true;
+  //cout << alea << ">" << exp(-(val2-val1)/__temperature) << endl;
+
+  if (alea > exp(-(val2-val1)/__temperature))
+    {
+      if (__minimal_met.get_value () > val2)
+        __minimal_met=p2_;
+      //cout << "has been kept " << endl;
+      return true;
+    }
 
   return false;
+
+}
+
+bool annealing::user_accept_ending ()
+{
+  if (__temperature > (__max-__min)*0.001)
+    return false;
+  if (__minimal_met.get_value () < get_PQR(2).get_value ())
+    {
+      set_PQR(__minimal_met, 2);
+      return false;
+    }
+  return true;
 
 }
 

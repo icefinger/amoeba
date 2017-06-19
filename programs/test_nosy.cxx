@@ -15,12 +15,9 @@ public:
   ~my_amoeba () {}
 
   //only get_value is absolutly required. It should return the value at the coordinates in coord_ (can be illimited in dimension)
-  double get_value (const double_1d& coord_)
+  double get_value (const double_1d& x_)
   {
-    double x = coord_[0]-40;
-    double y = coord_[1]+44;
-    double value=-100*exp(-x*x/7200)-100*exp(-y*y/7200);
-
+    double value=-100*(exp(-((x_[0]*x_[0]-4))/7200)+exp(-((x_[1]*x_[1]+4))/7200)-sin (x_[0])/20-sin(x_[1]/20));
     return value;
   }
 };
@@ -51,7 +48,7 @@ int main (int argc_, char ** argv_) {
 	     }
 	   else if (option=="-s" )
 	     {
-               sigma_val=atof(argv_[iarg]);
+               sigma_val=atof(argv_[++iarg]);
 	     }
 
 	  else
@@ -91,7 +88,7 @@ int main (int argc_, char ** argv_) {
   ma.set_debug(debug);
   ma.set_warn(false);
   //the deltas are for the resolution (1°) and the difference between the already scanned values.
-  ma.set_delta(1,1);
+  ma.set_delta(0.1,0.1);
   ma.set_starts (starts);
   ma.set_limits (limits);
 

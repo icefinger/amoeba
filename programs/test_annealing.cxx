@@ -11,16 +11,14 @@ using namespace std;
 class my_amoeba : public annealing {
 
 public:
-  my_amoeba () {}
+  my_amoeba (double min_, double max_): annealing (min_,max_)
+  {}
   ~my_amoeba () {}
 
   //only get_value is absolutly required. It should return the value at the coordinates in coord_ (can be illimited in dimension)
-  double get_value (const double_1d& list_)
+  double get_value (const double_1d& x_)
   {
-    double x = list_[0]-40;
-    double y = list_[1]+44;
-    double value=-100*exp(-x*x/7200)-100*exp(-y*y/7200);
-
+     double value=-100*(exp(-((x_[0]*x_[0]-4))/7200)+exp(-((x_[1]*x_[1]+4))/7200)-sin (x_[0]/20)-sin(x_[1]/20));
     return value;
 
   }
@@ -34,7 +32,7 @@ int main (int argc_, char ** argv_) {
   unsigned int noses=0;
   amoeba::double_1d sigma;
   int iarg = 1;
-  double sigma_val=5;
+  double sigma_val=5, min=-400, max=0;
   while (iarg < argc_)
     {
       string token = argv_[iarg];
@@ -52,9 +50,13 @@ int main (int argc_, char ** argv_) {
 	     }
 	   else if (option=="-s")
 	     {
-               sigma_val=atof(argv_[iarg]);
+               sigma_val=atof(argv_[++iarg]);
 	     }
-
+           else if (option=="-minmax")
+             {
+               min = atof(argv_[++iarg]);
+               max = atof(argv_[++iarg]);
+             }
 	  else
 	    {
 	      clog << "warning: ignoring option '" << option << "'!" << endl;
@@ -89,11 +91,11 @@ int main (int argc_, char ** argv_) {
   amoeba::double_2d starts(3,2, -100.,-100.,  100.,30.,   10.,30.);
 
   //creating and putting the start data
-  my_amoeba ma;
+  my_amoeba ma(min,max);
   ma.set_debug(debug);
   ma.set_warn(false);
   //the deltas are for the resolution (1°) and the difference between the already scanned values.
-  ma.set_delta(1,1);
+  ma.set_delta(0.1,0.1);
   ma.set_starts (starts);
   ma.set_limits (limits);
 

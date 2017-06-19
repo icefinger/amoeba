@@ -70,9 +70,9 @@ amoeba::point amoeba::find_min ( )
 {
   __counter=0;
 
-  while (  (__PQR[0].get_value () - __PQR[2].get_value () > __delta_val &&
-	    fabs((__PQR[0] - __PQR[2]).get_r ()) > __delta_pos) &&
-	   __counter<1000*__PQRsize)
+  while ((__PQR[0].get_value () - __PQR[2].get_value () > __delta_val ||
+          fabs((__PQR[0] - __PQR[2]).get_r ()) > __delta_pos) ||
+         !user_accept_ending ())
     {
       point M_QR=__reflectP ();
 

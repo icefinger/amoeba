@@ -33,7 +33,8 @@ class annealing : public nosy
 
  private:
   void __init_annealing ();
-  bool accept (double, double);
+  bool accept (const point&, const point&);
+  bool user_accept_ending ();
 
  private:
   bool __evol;
@@ -43,6 +44,8 @@ class annealing : public nosy
   double __min;
   double __max;
   bool __init;
+
+  point __minimal_met;
 
   std::default_random_engine __generator;
   std::normal_distribution<double> __normal_distribution;
