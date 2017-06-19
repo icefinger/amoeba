@@ -23,7 +23,7 @@ in your compilation command. A script amoeba-config will be created soon to faci
 
 ##Application example
 ###Simple amoeba
-This minimizer allows to find quickly a minimum, with a minimization of number of point calculus. The test_simple.cxx demonstrate how to use it for a function defined by:
+This minimizer allows to find quickly a minimum, with a minimization of number of calculated points. The test_simple.cxx demonstrates how to use it for a function defined by:
 
     double value=-100*(exp(-((x_[0]*x_[0]-4))/7200)+exp(-((x_[1]*x_[1]+4))/7200)-sin (x_[0]/50)-sin(x_[1]/50));
 
@@ -33,7 +33,7 @@ as showed in the following picture, this function has multiple minimums. If the 
 
 ###Annealing and nosy amoeba
 This, still under improvment, method uses first a random scan of the map with an arbitrary number of scanners (called noses). This scan can be homogeneous, or distributed with a normal distribution around the current minimum point.
-The annealing uses the noses scans as a base to decide, in function of the current temperature, if a non smaller value is accepted or not. The example test_annealing.cxx shows how to use this method. The next figure shows a more complex function, defined by
+The annealing uses the noses scans as a base to decide, in function of the current temperature, if a non smaller value is accepted or not. The example test_annealing.cxx shows how to use this method. The next figure shows the more complex used function, defined by
 
     double value=-100*(exp(-((x_[0]*x_[0]-4))/7200)+exp(-((x_[1]*x_[1]+4))/7200)-sin (x_[0]/20)-sin(x_[1]/20));
 
@@ -43,8 +43,8 @@ The simple amoeba is generally unable to find the real minimum and will tend to 
 
     ./test_annealing -n 2 -s 70 -minmax 0 400
 
-The -n gives a number of noses, -s the sigma of the normal distribution around the current minimum and -minmax define the temperature differential we want to use in this case (400°, the annealing algorithm has been tune in a way that the order of magnitude between the minimum and maximum is a good value). -s 70 is the order of magnitude of the x-y size minimum wells, optimizing the probability to escape from it. The
+The -n gives a number of noses, -s the sigma of the normal distribution around the current minimum and -minmax define the temperature differential we want to use in this case (400°, the annealing algorithm has been tuned in a way that the order of magnitude between the minimum and maximum is a good value). -s 70 is the order of magnitude of the x-y size minimum wells, optimizing the probability to escape from it. The next figure shows the probability to find the real minimum (-380) of to fall in other minimums.
 
 ![Probability to find the real minimum and wrong minimum](./doc/images/proba-annealing.png)
 
-As can be seen, the probability to find the wrong minimum is ~25%. Rerun a fair enough number of times the algorithm permit to reduce significantly this probability.
+As can be seen, the probability to find the wrong minimum is ~30%. Rerun a fair enough number of times the algorithm permit to reduce significantly this probability.
