@@ -47,4 +47,4 @@ The -n gives a number of noses, -s the sigma of the normal distribution around t
 
 ![Probability to find the real minimum and wrong minimum](./doc/images/proba-annealing.png)
 
-As can be seen, the probability to find the wrong minimum is ~25%. Rerun a fair enough time the algorithm permit to reduce significantly this probability.
+As can be seen, the probability to find the wrong minimum is ~25%. Rerun a fair enough number of times the algorithm permit to reduce significantly this probability.
