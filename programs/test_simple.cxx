@@ -7,6 +7,7 @@
 #include <cmath>
 
 using namespace std;
+using namespace icedcode;
 
 //creating the minimal class class that will use amoeba
 class my_amoeba : public amoeba {

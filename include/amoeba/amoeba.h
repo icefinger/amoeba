@@ -14,13 +14,13 @@
 #include <vector>
 #include <iostream>
 
+namespace icedcode {
+
 /**
  * \class amoeba
  * \brief main basic class. It's used by inheritence. The reasearch domain here is called a map and is not limited in dimension. The calculus is based on three main points, PQR, which are the two minimus and the maximum among the tested values.
  */
 class amoeba {
-
-
  public:
   /**
    * \class double_1d
@@ -150,8 +150,9 @@ class amoeba {
 
 };
 
-std::ostream& operator<<(std::ostream &oss_, const amoeba::double_1d& d1_);
-std::ostream& operator<<(std::ostream &oss_, const amoeba::point& d1_);
+}
+std::ostream& operator<<(std::ostream &oss_, const icedcode::amoeba::double_1d& d1_);
+std::ostream& operator<<(std::ostream &oss_, const icedcode::amoeba::point& d1_);
 
 
 #endif

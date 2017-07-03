@@ -13,44 +13,47 @@
 
 #include <nosy.h>
 
-/**
- * \class annealing
- * \brief Anneling method on the amoeba. It allows the current minimal point to escape from a small local minimal, the algorithm is "cooling down" slowly, and becom a normal amoeba with one nose when it's cold.
- */
-class annealing : public nosy
+namespace icedcode
 {
- public:
-  annealing (double min_=-1., double max_=-1); /**< constructor with an estimation of minimal and maximal value. The temperature is then calculated to optimize the probability to escape from a local minimum without slowing down too much the full calculus. If no value are put the temperature is estimated with the starting points and can evolve in function of minimum or maximum that the amoeba find out. */
-  virtual ~annealing ();
 
-  double get_temperature () const {return __temperature;}
-  void set_temperature (const double& t_) {__temperature=t_;} /**< Manually force a temperature. */
-  double get_decrease () const {return __decrease_fact;}
-  void set_decrease (const double& d_) {__decrease_fact=d_;} /**< Change the speed of cooling down */
+  /**
+   * \class annealing
+   * \brief Anneling method on the amoeba. It allows the current minimal point to escape from a small local minimal, the algorithm is "cooling down" slowly, and becom a normal amoeba with one nose when it's cold.
+   */
+  class annealing : public nosy
+  {
+  public:
+    annealing (double min_=-1., double max_=-1); /**< constructor with an estimation of minimal and maximal value. The temperature is then calculated to optimize the probability to escape from a local minimum without slowing down too much the full calculus. If no value are put the temperature is estimated with the starting points and can evolve in function of minimum or maximum that the amoeba find out. */
+    virtual ~annealing ();
 
- private:
-  void __evol_temperature (double val1_, double val2_);
+    double get_temperature () const {return __temperature;}
+    void set_temperature (const double& t_) {__temperature=t_;} /**< Manually force a temperature. */
+    double get_decrease () const {return __decrease_fact;}
+    void set_decrease (const double& d_) {__decrease_fact=d_;} /**< Change the speed of cooling down */
 
- private:
-  void __init_annealing ();
-  bool accept (const point&, const point&);
-  bool user_accept_ending ();
+  private:
+    void __evol_temperature (double val1_, double val2_);
 
- private:
-  bool __evol;
-  double __temperature;
-  double __decrease_fact;
-  unsigned int __heat_counter;
-  double __min;
-  double __max;
-  bool __init;
+  private:
+    void __init_annealing ();
+    bool accept (const point&, const point&);
+    bool user_accept_ending ();
 
-  point __minimal_met;
+  private:
+    bool __evol;
+    double __temperature;
+    double __decrease_fact;
+    unsigned int __heat_counter;
+    double __min;
+    double __max;
+    bool __init;
 
-  std::default_random_engine __generator;
-  std::normal_distribution<double> __normal_distribution;
-  std::uniform_real_distribution<double> __uniform_distribution;
+    point __minimal_met;
 
-};
+    std::default_random_engine __generator;
+    std::normal_distribution<double> __normal_distribution;
+    std::uniform_real_distribution<double> __uniform_distribution;
 
+  };
+}
 #endif

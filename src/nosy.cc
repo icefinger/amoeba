@@ -8,130 +8,134 @@
 
 using namespace std;
 
-nosy::nosy ()
+namespace icedcode
 {
-  __warn=true;
-  __normal=false;
-  struct timeval tv;
-  gettimeofday(&tv, NULL);
 
-  __generator.seed (1000000*tv.tv_sec+tv.tv_usec);
-}
+  nosy::nosy ()
+  {
+    __warn=true;
+    __normal=false;
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
 
-nosy::~nosy ()
-{
-}
+    __generator.seed (1000000*tv.tv_sec+tv.tv_usec);
+  }
 
-void nosy::set_noses (const double_2d &limits_)
-{
-  if (!__check_noses(limits_))
-    exit (1);
+  nosy::~nosy ()
+  {
+  }
 
-  set_limits(limits_);
+  void nosy::set_noses (const double_2d &limits_)
+  {
+    if (!__check_noses(limits_))
+      exit (1);
 
-  __add_nose(limits_.size ());
+    set_limits(limits_);
 
-  __normal=false;
+    __add_nose(limits_.size ());
 
-  user_work ();
-}
+    __normal=false;
 
-void nosy::set_noses (const double_1d& sigma_)
-{
-  __sigma=sigma_;
-  __normal=true;
-  __add_nose(sigma_.size ());
-}
+    user_work ();
+  }
 
-void nosy::__add_nose (unsigned int nb_)
-{
-  for (unsigned int nb=0; nb<nb_; nb++)
-    {
-      point tmp;
-      tmp.set_amoeba(this);
-      __noses.push_back(tmp);
-    }
-}
+  void nosy::set_noses (const double_1d& sigma_)
+  {
+    __sigma=sigma_;
+    __normal=true;
+    __add_nose(sigma_.size ());
+  }
 
-bool nosy::user_work ()
-{
-  bool has_changed = false;
-  for (list<point>::iterator nit=__noses.begin();
-       nit!=__noses.end();
-       nit++)
-    {
-      double_1d pos;
-      if (__normal && __sigma.size ())
-	{
-	  int sit=0;
-	  for (double_1d_cit lmean=get_PQR(2).begin(); lmean!=get_PQR(2).end (); lmean++)
-	    {
-              normal_distribution<double>::param_type p(*lmean, __sigma[sit]);
-              __normal_distribution.param(p);
-	      double val= __normal_distribution (__generator);
-	      pos.push_back (val);
-	      sit++;
-	    }
-	}
-      else
-	for (double_2d_cit lit=get_limits().begin(); lit!=get_limits().end(); lit++)
-	{
-	  double range=(*lit).back()-(*lit).front();
-	  double min=(*lit).front();
-	  double val;
-          std::uniform_real_distribution<double>::param_type p(min, range);
-          __uniform_distribution.param (p);
-	  val= __uniform_distribution (__generator);
-	  pos.push_back (val);
-	}
-      (*nit).set_pos(pos);
-      double rnit=(*nit).get_r ();
-      double rPQR2=get_PQR(2).get_r();
-      double rPQR0=get_PQR(0).get_r();
-      if ( fabs(rnit - rPQR2) > fabs(rPQR2-rPQR0) &&
-	   ((*nit).get_value()<get_PQR(2).get_value () ||
-	    accept (*nit,get_PQR(2))))
-	{
-	  set_PQR(*nit,2);
-          has_changed = true;
-	}
-    }
+  void nosy::__add_nose (unsigned int nb_)
+  {
+    for (unsigned int nb=0; nb<nb_; nb++)
+      {
+        point tmp;
+        tmp.set_amoeba(this);
+        __noses.push_back(tmp);
+      }
+  }
 
-  return has_changed;
+  bool nosy::user_work ()
+  {
+    bool has_changed = false;
+    for (list<point>::iterator nit=__noses.begin();
+         nit!=__noses.end();
+         nit++)
+      {
+        double_1d pos;
+        if (__normal && __sigma.size ())
+          {
+            int sit=0;
+            for (double_1d_cit lmean=get_PQR(2).begin(); lmean!=get_PQR(2).end (); lmean++)
+              {
+                normal_distribution<double>::param_type p(*lmean, __sigma[sit]);
+                __normal_distribution.param(p);
+                double val= __normal_distribution (__generator);
+                pos.push_back (val);
+                sit++;
+              }
+          }
+        else
+          for (double_2d_cit lit=get_limits().begin(); lit!=get_limits().end(); lit++)
+            {
+              double range=(*lit).back()-(*lit).front();
+              double min=(*lit).front();
+              double val;
+              std::uniform_real_distribution<double>::param_type p(min, range);
+              __uniform_distribution.param (p);
+              val= __uniform_distribution (__generator);
+              pos.push_back (val);
+            }
+        (*nit).set_pos(pos);
+        double rnit=(*nit).get_r ();
+        double rPQR2=get_PQR(2).get_r();
+        double rPQR0=get_PQR(0).get_r();
+        if ( fabs(rnit - rPQR2) > fabs(rPQR2-rPQR0) &&
+             ((*nit).get_value()<get_PQR(2).get_value () ||
+              accept (*nit,get_PQR(2))))
+          {
+            set_PQR(*nit,2);
+            has_changed = true;
+          }
+      }
 
-}
+    return has_changed;
 
- bool nosy::__check_noses (const double_2d &limits_) const
-{
-  if (!PQR_size ())
-    {
-      cerr << "ERROR:nosy: You should add noses after the normal feets.\n";
-      return false;
-    }
+  }
 
-  if (limits_.size() != get_PQR(0).size())
-	{
-	  cerr << "ERROR:nosy: bad dim for noses.\n";
-	  return false;
-	}
+  bool nosy::__check_noses (const double_2d &limits_) const
+  {
+    if (!PQR_size ())
+      {
+        cerr << "ERROR:nosy: You should add noses after the normal feets.\n";
+        return false;
+      }
 
-  for (double_2d_cit lit=limits_.begin(); lit!=limits_.end(); lit++)
-    {
-      if ((*lit).size() != 2)
-	{
-	  cerr << "ERROR:nosy: bad number of limits for noses. it should be 2.\n";
-	  return false;
-	}
+    if (limits_.size() != get_PQR(0).size())
+      {
+        cerr << "ERROR:nosy: bad dim for noses.\n";
+        return false;
+      }
 
-      if ((*lit).front () >= (*lit).back())
-	{
-	  cerr << "ERROR:nosy: the front should be the min and different to the back.\n";
-	}
+    for (double_2d_cit lit=limits_.begin(); lit!=limits_.end(); lit++)
+      {
+        if ((*lit).size() != 2)
+          {
+            cerr << "ERROR:nosy: bad number of limits for noses. it should be 2.\n";
+            return false;
+          }
 
-    }
-  if (__warn && limits_.size () > PQR_size ())
-    clog << "WARNING: There is a lot of noses. It could burden the amoeba.\n";
+        if ((*lit).front () >= (*lit).back())
+          {
+            cerr << "ERROR:nosy: the front should be the min and different to the back.\n";
+          }
 
-  return true;
+      }
+    if (__warn && limits_.size () > PQR_size ())
+      clog << "WARNING: There is a lot of noses. It could burden the amoeba.\n";
 
+    return true;
+
+  }
 }

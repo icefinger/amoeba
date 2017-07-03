@@ -5,7 +5,9 @@
 #include <sys/time.h>
 #include <ctime>
 #include <cmath>
+
 using namespace std;
+using namespace icedcode;
 
 //creating the minimal class class that will use annealing. This class is based on nosy, so it can combine the both methods
 class my_amoeba : public annealing {
