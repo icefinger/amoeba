@@ -101,7 +101,7 @@ int main (int argc_, char ** argv_) {
   ma.set_starts (starts);
   ma.set_limits (limits);
 
-  cout << "research of the minimum at more than 99.9999% of confidence...please wait." << endl;
+  cout << "research of the minimum...please wait." << endl;
 
   ma.set_starts (starts);
 

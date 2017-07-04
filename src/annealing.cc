@@ -70,13 +70,10 @@ namespace icedcode
     __uniform_distribution.param(p);
     double alea=__uniform_distribution (__generator);
 
-    //cout << alea << ">" << exp(-(val2-val1)/__temperature) << endl;
-
     if (alea > exp(-(val2-val1)/__temperature))
       {
         if (__minimal_met.get_value () > val2)
           __minimal_met=p2_;
-        //cout << "has been kept " << endl;
         return true;
       }
 
@@ -88,7 +85,7 @@ namespace icedcode
   {
     if (__temperature > (__max-__min)*0.001)
       return false;
-    if (__minimal_met.get_value () < get_PQR(2).get_value ())
+    if (__minimal_met.get_value () <= get_PQR(2).get_value ())
       {
         set_PQR(__minimal_met, 2);
         return false;

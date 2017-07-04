@@ -73,7 +73,7 @@ namespace icedcode
     __counter=0;
 
     while ((__PQR[0].get_value () - __PQR[2].get_value () > __delta_val ||
-            fabs((__PQR[0] - __PQR[2]).get_r ()) > __delta_pos) ||
+            (__PQR[0] - __PQR[2]).get_r () > __delta_pos) ||
            !user_accept_ending ())
       {
         point M_QR=__reflectP ();
@@ -92,10 +92,11 @@ namespace icedcode
               }
 
           }
+
         __classify();
+
         if (user_work ())
           __classify();
-
         __counter++;
 
       }

@@ -59,6 +59,7 @@ namespace icedcode
   bool nosy::user_work ()
   {
     bool has_changed = false;
+    int sit=0;
     for (list<point>::iterator nit=__noses.begin();
          nit!=__noses.end();
          nit++)
@@ -66,14 +67,12 @@ namespace icedcode
         double_1d pos;
         if (__normal && __sigma.size ())
           {
-            int sit=0;
             for (double_1d_cit lmean=get_PQR(2).begin(); lmean!=get_PQR(2).end (); lmean++)
               {
                 normal_distribution<double>::param_type p(*lmean, __sigma[sit]);
                 __normal_distribution.param(p);
                 double val= __normal_distribution (__generator);
                 pos.push_back (val);
-                sit++;
               }
           }
         else
@@ -92,12 +91,13 @@ namespace icedcode
         double rPQR2=get_PQR(2).get_r();
         double rPQR0=get_PQR(0).get_r();
         if ( fabs(rnit - rPQR2) > fabs(rPQR2-rPQR0) &&
-             ((*nit).get_value()<get_PQR(2).get_value () ||
-              accept (*nit,get_PQR(2))))
+             (((*nit).get_value()<get_PQR(2).get_value () ||
+               accept (*nit,get_PQR(2)))))
           {
             set_PQR(*nit,2);
             has_changed = true;
           }
+        sit++;
       }
 
     return has_changed;
