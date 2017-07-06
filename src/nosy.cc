@@ -50,7 +50,7 @@ namespace icedcode
   {
     for (unsigned int nb=0; nb<nb_; nb++)
       {
-        nose tmp;
+        nose tmp (this);
         tmp.set_amoeba(this);
         __noses.push_back(tmp);
       }
@@ -59,7 +59,6 @@ namespace icedcode
   bool nosy::user_work ()
   {
     bool has_changed = false;
-    int sit=0;
     for (list<nose>::iterator nit=__noses.begin();
          nit!=__noses.end();
          nit++)
@@ -108,8 +107,9 @@ namespace icedcode
 
   }
 
-  nosy::nose::nose ()
+  nosy::nose::nose (nosy* nose_)
   {
+    __nosy=nose_;
     __total_noses++;
     __id = __total_noses;
   }
@@ -117,45 +117,42 @@ namespace icedcode
   void nosy::nose::Process ()
   {
     double_1d pos;
-    if (__normal && __sigma.size ())
+    if (__nosy->__normal && __nosy->__sigma.size ())
       {
-        for (double_1d_cit lmean=get_PQR(2).begin(); lmean!=get_PQR(2).end (); lmean++)
+        for (double_1d_cit lmean=__nosy->get_PQR(2).begin(); lmean!=__nosy->get_PQR(2).end (); lmean++)
           {
-            normal_distribution<double>::param_type p(*lmean, __sigma[__id]);
-            __normal_distribution.param(p);
-            double val= __normal_distribution (__generator);
+            normal_distribution<double>::param_type p(*lmean, __nosy->__sigma[__id]);
+            __nosy->__normal_distribution.param(p);
+            double val= __nosy->__normal_distribution (__nosy->__generator);
             pos.push_back (val);
           }
       }
     else
-      for (double_2d_cit lit=get_limits().begin(); lit!=get_limits().end(); lit++)
+      for (double_2d_cit lit=__nosy->get_limits().begin(); lit!=__nosy->get_limits().end(); lit++)
         {
           double range=(*lit).back()-(*lit).front();
           double min=(*lit).front();
           double val;
           std::uniform_real_distribution<double>::param_type p(min, range);
-          __uniform_distribution.param (p);
-          val= __uniform_distribution (__generator);
+          __nosy->__uniform_distribution.param (p);
+          val= __nosy->__uniform_distribution (__nosy->__generator);
           pos.push_back (val);
         }
     set_pos(pos);
     double rnit=get_r ();
-    double rPQR2=get_PQR(2).get_r();
-    double rPQR0=get_PQR(0).get_r();
+    double rPQR2=__nosy->get_PQR(2).get_r();
+    double rPQR0=__nosy->get_PQR(0).get_r();
     if ( fabs(rnit - rPQR2) > fabs(rPQR2-rPQR0) &&
-         ((get_value()<get_PQR(2).get_value () ||
-           nosy::accept (*this,get_PQR(2)))))
+         ((get_value()<__nosy->get_PQR(2).get_value () ||
+           __nosy->accept (*this,__nosy->get_PQR(2)))))
       {
-        set_PQR(*this,2);
-        return true;
+        __nosy->set_PQR(*this,2);
+        __has_been_changed|=true;
       }
-    return false;
   }
 
 
   size_t nosy::nose::__total_noses = 0;
   bool nosy::nose::__has_been_changed = 0;
-  bool nosy::__normal;
-  nosy::double_1d nosy::__sigma
-
+  nosy* nosy::nose::__nosy;
 }

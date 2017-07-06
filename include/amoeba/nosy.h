@@ -49,7 +49,7 @@ namespace icedcode
 #endif
   {
   public:
-    nose ();
+    nose (nosy* nosy_);
     ~nose () {};
     void Reset () {__has_been_changed = false;}
     bool AnyHasChanged () {return __has_been_changed;}
@@ -58,12 +58,13 @@ namespace icedcode
     size_t __id = 0;
     static size_t __total_noses;
     static bool __has_been_changed;
+    static nosy* __nosy;
   };
 
   std::list<nose> __noses;
-  static bool __normal;
+  bool __normal;
   bool __warn;
-  static double_1d __sigma;
+  double_1d __sigma;
   protected:
   std::default_random_engine __generator;
   std::normal_distribution<double> __normal_distribution;
