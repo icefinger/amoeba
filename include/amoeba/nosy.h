@@ -23,6 +23,7 @@ namespace icedcode
  */
   class nosy : public amoeba
   {
+    class nose;
   public:
     nosy ();
     virtual ~nosy ();
@@ -38,17 +39,35 @@ namespace icedcode
     virtual double get_value (const double_1d&) = 0;
     bool __check_noses (const double_2d& limits_) const;
     bool user_work ();
+    //bool __one_nose_work (nose& nose_, size_t sit_);
     virtual bool accept (const point&, const point&) {return false;}
 
   private:
-    std::list<point> __noses;
-    bool __normal;
-    bool __warn;
-    double_1d __sigma;
+    class nose: public point
+#ifdef USE_NPROCESS
+    ,public NProcess::Object
+#endif
+  {
+  public:
+    nose ();
+    ~nose () {};
+    void Reset () {__has_been_changed = false;}
+    bool AnyHasChanged () {return __has_been_changed;}
+    void Process ();
+  private:
+    size_t __id = 0;
+    static size_t __total_noses;
+    static bool __has_been_changed;
+  };
+
+  std::list<nose> __noses;
+  static bool __normal;
+  bool __warn;
+  static double_1d __sigma;
   protected:
-    std::default_random_engine __generator;
-    std::normal_distribution<double> __normal_distribution;
-    std::uniform_real_distribution<double> __uniform_distribution;
+  std::default_random_engine __generator;
+  std::normal_distribution<double> __normal_distribution;
+  std::uniform_real_distribution<double> __uniform_distribution;
   };
 }
 #endif
