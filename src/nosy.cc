@@ -52,19 +52,27 @@ namespace icedcode
       {
         nose tmp (this);
         tmp.set_amoeba(this);
+#ifndef USE_NPROCESS
         __noses.push_back(tmp);
+#endif
       }
   }
 
   bool nosy::user_work ()
   {
     bool has_changed = false;
+#ifdef USE_NPROCESS
+    cout << "try to launch them " << endl;
+    icedcode::NProcess::GetIt()->ProcessAll();
+#else
     for (list<nose>::iterator nit=__noses.begin();
          nit!=__noses.end();
          nit++)
       {
         (*nit).Process ();
       }
+
+#endif
 
     has_changed = (*__noses.begin()).AnyHasChanged ();
     (*__noses.begin ()).Reset ();
@@ -116,6 +124,7 @@ namespace icedcode
 
   void nosy::nose::Process ()
   {
+    cout << NProcess::GetIt ()->GetNbRunning () << " running" << endl;
     double_1d pos;
     if (__nosy->__normal && __nosy->__sigma.size ())
       {

@@ -14,6 +14,10 @@
 #include <amoeba.h>
 #include <random>
 
+#ifdef USE_NPROCESS
+#include <NProcess.h>
+#endif
+
 namespace icedcode
 {
 /**
@@ -54,6 +58,7 @@ namespace icedcode
     void Reset () {__has_been_changed = false;}
     bool AnyHasChanged () {return __has_been_changed;}
     void Process ();
+    void Run () {}
   private:
     size_t __id = 0;
     static size_t __total_noses;
