@@ -23,6 +23,7 @@ namespace icedcode
 
   nosy::~nosy ()
   {
+    rm_noses ();
   }
 
   void nosy::set_noses (const double_2d &limits_)
@@ -46,12 +47,18 @@ namespace icedcode
     __add_nose(sigma_.size ());
   }
 
+  void nosy::rm_noses ()
+  {
+    for (auto it: __noses)
+      delete (it);
+    __noses.clear ();
+  }
   void nosy::__add_nose (unsigned int nb_)
   {
     for (unsigned int nb=0; nb<nb_; nb++)
       {
-        nose tmp (this);
-        tmp.set_amoeba(this);
+        nose* tmp = new nose (this);
+        tmp->set_amoeba(this);
 #ifndef USE_NPROCESS
         __noses.push_back(tmp);
 #endif
@@ -62,20 +69,19 @@ namespace icedcode
   {
     bool has_changed = false;
 #ifdef USE_NPROCESS
-    cout << "try to launch them " << endl;
     icedcode::NProcess::GetIt()->ProcessAll();
 #else
-    for (list<nose>::iterator nit=__noses.begin();
+    for (list<nose*>::iterator nit=__noses.begin();
          nit!=__noses.end();
          nit++)
       {
-        (*nit).Process ();
+        (*nit)->Process ();
       }
 
 #endif
 
-    has_changed = (*__noses.begin()).AnyHasChanged ();
-    (*__noses.begin ()).Reset ();
+    has_changed = (*__noses.begin())->AnyHasChanged ();
+    (*__noses.begin ())->Reset ();
     return has_changed;
 
   }
@@ -124,7 +130,7 @@ namespace icedcode
 
   void nosy::nose::Process ()
   {
-    cout << NProcess::GetIt ()->GetNbRunning () << " running" << endl;
+    __has_been_changed=false;
     double_1d pos;
     if (__nosy->__normal && __nosy->__sigma.size ())
       {

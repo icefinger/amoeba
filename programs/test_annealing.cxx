@@ -29,7 +29,7 @@ public:
 
 
 int main (int argc_, char ** argv_) {
-  cout<<  "you have "<<icedcode::NProcess::GetIt()->GetNbProc()<<" processor."<<endl;
+
   bool debug=false;
   unsigned int noses=0;
   amoeba::double_1d sigma;

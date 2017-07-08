@@ -94,9 +94,10 @@ namespace icedcode
           }
 
         __classify();
-
+        cout << "entre" << endl;
         if (user_work ())
           __classify();
+        cout << "sort" << endl;
         __counter++;
 
       }
