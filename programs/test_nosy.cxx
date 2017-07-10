@@ -103,5 +103,6 @@ int main (int argc_, char ** argv_) {
   //the result is directly returned by find_min
   result=ma.find_min ();
   cout << "result: " << result << endl;
+
   return 0;
 }

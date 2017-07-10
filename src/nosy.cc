@@ -15,10 +15,6 @@ namespace icedcode
   {
     __warn=true;
     __normal=false;
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-
-    __generator.seed (1000000*tv.tv_sec+tv.tv_usec);
   }
 
   nosy::~nosy ()
@@ -126,19 +122,25 @@ namespace icedcode
     __nosy=nose_;
     __total_noses++;
     __id = __total_noses;
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+
+    __generator.seed (1000000*tv.tv_sec+tv.tv_usec+__id);
+
   }
 
   void nosy::nose::Process ()
   {
     __has_been_changed=false;
     double_1d pos;
+
     if (__nosy->__normal && __nosy->__sigma.size ())
       {
         for (double_1d_cit lmean=__nosy->get_PQR(2).begin(); lmean!=__nosy->get_PQR(2).end (); lmean++)
           {
             normal_distribution<double>::param_type p(*lmean, __nosy->__sigma[__id]);
-            __nosy->__normal_distribution.param(p);
-            double val= __nosy->__normal_distribution (__nosy->__generator);
+            __normal_distribution.param(p);
+            double val= __normal_distribution (__generator);
             pos.push_back (val);
           }
       }
@@ -149,14 +151,16 @@ namespace icedcode
           double min=(*lit).front();
           double val;
           std::uniform_real_distribution<double>::param_type p(min, range);
-          __nosy->__uniform_distribution.param (p);
-          val= __nosy->__uniform_distribution (__nosy->__generator);
+          __uniform_distribution.param (p);
+          val= __uniform_distribution (__generator);
           pos.push_back (val);
         }
+
     set_pos(pos);
     double rnit=get_r ();
     double rPQR2=__nosy->get_PQR(2).get_r();
     double rPQR0=__nosy->get_PQR(0).get_r();
+
     if ( fabs(rnit - rPQR2) > fabs(rPQR2-rPQR0) &&
          ((get_value()<__nosy->get_PQR(2).get_value () ||
            __nosy->accept (*this,__nosy->get_PQR(2)))))
