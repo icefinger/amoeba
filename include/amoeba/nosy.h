@@ -34,7 +34,7 @@ namespace icedcode
 
     void set_noses (const double_2d& limits_); /**< Putting the limit of scanning zone for a flat random distribution. By default the same as the map limits. The size of the double_2d define the number of noses and the 2 value of the contained double_1d define the min and max */
     void set_noses (const double_1d&); /**< Put noses for normal distribution around the minimum point. The size of the double_1d define the number of noses, the values are the sigmas of each one. */
-    unsigned int nb_noses () const {return __noses.size();}
+    size_t nb_noses () const;
     void rm_noses ();
     void set_warn (bool w_) {__warn=w_;}
 

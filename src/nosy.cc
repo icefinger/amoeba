@@ -49,6 +49,16 @@ namespace icedcode
       delete (it);
     __noses.clear ();
   }
+
+  size_t nosy::nb_noses () const
+  {
+#ifdef USE_NPROCESS
+    return NProcess::GetIt ()->GetNbObject ();
+#else
+    return __noses.size ();
+#endif
+  }
+
   void nosy::__add_nose (unsigned int nb_)
   {
     for (unsigned int nb=0; nb<nb_; nb++)
