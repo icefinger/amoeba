@@ -65,6 +65,9 @@ namespace icedcode
       {
         nose* tmp = new nose (this);
         tmp->set_amoeba(this);
+        if (__sigma.size ())
+          tmp->SetSigma (__sigma[nb]);
+
 #ifndef USE_NPROCESS
         __noses.push_back(tmp);
 #endif
@@ -144,11 +147,11 @@ namespace icedcode
     __has_been_changed=false;
     double_1d pos;
 
-    if (__nosy->__normal && __nosy->__sigma.size ())
+    if (__nosy->__normal && __sigma > 0)
       {
         for (double_1d_cit lmean=__nosy->get_PQR(2).begin(); lmean!=__nosy->get_PQR(2).end (); lmean++)
           {
-            normal_distribution<double>::param_type p(*lmean, __nosy->__sigma[__id]);
+            normal_distribution<double>::param_type p(*lmean, __sigma);
             __normal_distribution.param(p);
             double val= __normal_distribution (__generator);
             pos.push_back (val);
@@ -173,7 +176,7 @@ namespace icedcode
 
     if ( fabs(rnit - rPQR2) > fabs(rPQR2-rPQR0) &&
          ((get_value()<__nosy->get_PQR(2).get_value () ||
-           __nosy->accept (*this,__nosy->get_PQR(2)))))
+           user_work (*this,__nosy->get_PQR(2)))))
       {
         __nosy->set_PQR(*this,2);
         __has_been_changed|=true;

@@ -6,6 +6,11 @@
 #include <ctime>
 #include <cmath>
 
+#ifdef ENABLE_ROOT
+#include <TGraph.h>
+void save_visu (char *);
+#endif
+
 using namespace std;
 using namespace icedcode;
 
@@ -30,6 +35,7 @@ public:
 int main (int argc_, char ** argv_) {
 
   bool debug=false;
+  bool visu=false;
 
   int iarg = 1;
   while (iarg < argc_)
@@ -43,6 +49,14 @@ int main (int argc_, char ** argv_) {
 	    {
 	      debug = true;
 	    }
+          if (option == "-visu")
+            {
+              visu = true;
+#ifndef ENABLE_ROOT
+              cerr << "No visu, compile with the ENABLE_ROOT=TRUE option." << endl;
+              return 0;
+#endif
+            }
 	  else
 	    {
 	      clog << "warning: ignoring option '" << option << "'!" << endl;
@@ -82,7 +96,18 @@ int main (int argc_, char ** argv_) {
   //the result is directly returned by find_min
   result=ma.find_min ();
 
+#ifdef ENABLE_ROOT
+  save_visu ("meh", ma);
+#endif
+
   cout << "results " << result << " in " << ma.get_counter () << " counts" << endl;
 
   return 0;
 }
+
+#ifdef ENABLE_ROOT
+void save_visu (const char* file_root_, const amoeba& am_)
+{
+  const vector<amoeba::point*> &saved_points = am_.get_saved_steps ();
+}
+#endif

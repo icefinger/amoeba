@@ -27,26 +27,26 @@ namespace icedcode
  */
   class nosy : public amoeba
   {
+  protected:
     class nose;
   public:
     nosy ();
     virtual ~nosy ();
 
-    void set_noses (const double_2d& limits_); /**< Putting the limit of scanning zone for a flat random distribution. By default the same as the map limits. The size of the double_2d define the number of noses and the 2 value of the contained double_1d define the min and max */
-    void set_noses (const double_1d&); /**< Put noses for normal distribution around the minimum point. The size of the double_1d define the number of noses, the values are the sigmas of each one. */
+    virtual void set_noses (const double_2d& limits_); /**< Putting the limit of scanning zone for a flat random distribution. By default the same as the map limits. The size of the double_2d define the number of noses and the 2 value of the contained double_1d define the min and max */
+    virtual void set_noses (const double_1d&); /**< Put noses for normal distribution around the minimum point. The size of the double_1d define the number of noses, the values are the sigmas of each one. */
     size_t nb_noses () const;
     void rm_noses ();
     void set_warn (bool w_) {__warn=w_;}
 
   private:
-    void __add_nose (unsigned int nb_);
+    virtual void __add_nose (unsigned int nb_);
     virtual double get_value (const double_1d&) = 0;
-    bool __check_noses (const double_2d& limits_) const;
-    bool user_work ();
+    virtual bool __check_noses (const double_2d& limits_) const;
+    virtual bool user_work ();
     //bool __one_nose_work (nose& nose_, size_t sit_);
-    virtual bool accept (const point&, const point&) {return false;}
 
-  private:
+  protected:
     class nose: public point
 #ifdef USE_NPROCESS
     ,public NProcess::Object
@@ -59,8 +59,13 @@ namespace icedcode
     bool AnyHasChanged () {return __has_been_changed;}
     void Process ();
     void Run () {}
-  private:
+    void SetSigma (double sigma_) {__sigma = sigma_;}
+    double GetSigma () const {return __sigma;}
+  protected:
+    virtual bool user_work (const point&, const point&) {return false;}
+  protected:
     size_t __id = 0;
+    double __sigma = -1;
     static size_t __total_noses;
     static bool __has_been_changed;
     static nosy* __nosy;

@@ -98,6 +98,14 @@ namespace icedcode
           __classify();
         __counter++;
 
+        if (__save_steps)
+          {
+            point* tocpy = new point[__PQRsize];
+            for (size_t i = 0; i<__PQRsize; i++)
+              tocpy[i] = __PQR[i];
+            __saved_steps_list.push_back (tocpy);
+          }
+
       }
 
     if (__debug)

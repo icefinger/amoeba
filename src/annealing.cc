@@ -8,12 +8,11 @@ using namespace std;
 namespace icedcode
 {
 
-  annealing::annealing (double min_, double max_)
+  annealing::annealing (double temperature_)
   {
-    __min=min_;
-    __decrease_fact=0.9;
-    __max=max_;
-    __init=false;
+    __global_temperature=temperature_;
+    __global_decrease_fact=0.9;
+     __init=false;
   }
 
   annealing::~annealing ()
@@ -22,19 +21,19 @@ namespace icedcode
 
   void annealing::__init_annealing ()
   {
-    if (__min<0 || __max <=0 || __min>=__max)
+    if (__global_temperature < 0)
       {
-        __min=get_PQR(2).get_value();
-        __max=get_PQR(0).get_value();
+        double min=get_PQR(2).get_value();
+        double max=get_PQR(0).get_value();
+        __global_temperature = max - min;
         __evol=true;
       }else
       __evol=false;
 
     __minimal_met=get_PQR(2);
 
-    __temperature=1.44*(__max-__min)*1e2;
+    __global_temperature=1.44*(__global_temperature);
 
-    __heat_counter=numeric_limits<unsigned int>::max();
     if (!nb_noses ())
       {
         double_1d starts_mean;
@@ -49,28 +48,53 @@ namespace icedcode
     __init=true;
   }
 
-  bool annealing::accept (const point& p1_, const point& p2_)
+
+  bool annealing::user_accept_ending ()
   {
-    if (!__init)
-      __init_annealing ();
+    if (__mean_temperature > (__global_temperature)*0.001)
+      return false;
+    if (__minimal_met.get_value () <= get_PQR(2).get_value ())
+        set_PQR(__minimal_met, 2);
+
+    return true;
+
+  }
+
+  double annealing::annealing::__mean_temperature = 0;
+  amoeba::point  annealing::annealing::__minimal_met;
+
+
+
+  annealing::hot_nose::hot_nose (nosy* nosy_, double temperature_) : annealing::nose::nose (nosy_)
+  {
+    __temperature = temperature_;
+    __nb_hot_noses++;
+  }
+
+  bool annealing::hot_nose::user_work (const point& p1_, const point& p2_)
+  {
+    if (((annealing*)__nosy)->__init)
+      ((annealing*)__nosy)->__init_annealing ();
+
+    double current_temperature = __temperature;
 
     double val1=p1_.get_value (), val2=p2_.get_value ();
 
     if (__evol)
       __evol_temperature (val1,val2);
 
-    if (val1<val2 || get_counter()==__heat_counter)
-      return false;
+    __temperature*=__decrease_fact;
 
+    if (__id == 0)
+      __mean_temperature = 0;
 
-    __temperature*=pow(__decrease_fact,this->get_counter()-__heat_counter);
-    __heat_counter=this->get_counter();
+    __mean_temperature += __temperature/__nb_hot_noses;
 
     std::uniform_real_distribution<double>::param_type p(1,2);
     __uniform_distribution.param(p);
     double alea=__uniform_distribution (__generator);
 
-    if (alea > exp(-(val2-val1)/__temperature))
+    if (alea > exp(-(val2-val1)/current_temperature))
       {
         if (__minimal_met.get_value () > val2)
           __minimal_met=p2_;
@@ -81,49 +105,16 @@ namespace icedcode
 
   }
 
-  bool annealing::user_accept_ending ()
+  void annealing::hot_nose::__evol_temperature (double val1_, double val2_)
   {
-    if (__temperature > (__max-__min)*0.001)
-      return false;
-    if (__minimal_met.get_value () <= get_PQR(2).get_value ())
+    double new_temperature = fabs (val1_ - val2_)*1.44;
+
+    if (new_temperature > __temperature)
       {
-        set_PQR(__minimal_met, 2);
-        return false;
+        __temperature = new_temperature;
       }
-    return true;
-
   }
 
-  void annealing::__evol_temperature (double val1_, double val2_)
-  {
+  size_t annealing::hot_nose::__nb_hot_noses = 0;
 
-    bool has_changed=false;
-
-    if (val1_>__max)
-      {
-        __max=val1_;
-        has_changed=true;
-      } else
-      if (val1_<__min)
-        {
-          __min=val1_;
-          has_changed=true;
-        }
-    if (val2_>__max)
-      {
-        __max=val2_;
-        has_changed=true;
-      } else
-      if (val2_<__min)
-        {
-          __min=val2_;
-          has_changed=true;
-        }
-
-    if (!has_changed)
-      return;
-
-    __temperature=(1.44*(__max-__min)/2)*pow(__decrease_fact,__heat_counter);
-
-  }
 }
