@@ -47,6 +47,11 @@ namespace icedcode
     //bool __one_nose_work (nose& nose_, size_t sit_);
 
   protected:
+    /**
+     * \class nose
+     * \brief scanner class. Use the NProcess syntax for multi-threading.
+     *
+     */
     class nose: public point
 #ifdef USE_NPROCESS
     ,public NProcess::Object
@@ -62,6 +67,12 @@ namespace icedcode
     void SetSigma (double sigma_) {__sigma = sigma_;}
     double GetSigma () const {return __sigma;}
   protected:
+    /**
+     * virtual function that can be overloaded by the user to decide if the point is kept among the PQR, even if it's non smaller than the other values.
+     *
+     *
+     * @return
+     */
     virtual bool user_work (const point&, const point&) {return false;}
   protected:
     size_t __id = 0;

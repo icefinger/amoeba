@@ -26,6 +26,7 @@ namespace icedcode
   {
     if (__init)
       delete [] __PQR;
+    flush_saved_steps ();
   }
 
   void amoeba::set_limit (double min_, double max_, unsigned int pos_)
@@ -113,6 +114,15 @@ namespace icedcode
 
     return __PQR[2];
 
+  }
+
+  void amoeba::flush_saved_steps ()
+  {
+    for (auto& it: __saved_steps_list)
+      {
+        delete (it);
+      }
+    __saved_steps_list.clear ();
   }
 
   bool amoeba::__check_starts(const double_2d &starts_) const

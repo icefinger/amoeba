@@ -13,7 +13,7 @@ using namespace icedcode;
 class my_amoeba : public annealing {
 
 public:
-  my_amoeba (double min_, double max_): annealing (min_,max_)
+  my_amoeba (double temp_): annealing (temp_)
   {}
   ~my_amoeba () {}
 
@@ -34,7 +34,7 @@ int main (int argc_, char ** argv_) {
   unsigned int noses=0;
   amoeba::double_1d sigma;
   int iarg = 1;
-  double sigma_val=5, min=-400, max=0;
+  double sigma_val=5, temp = 400;
   while (iarg < argc_)
     {
       string token = argv_[iarg];
@@ -54,10 +54,9 @@ int main (int argc_, char ** argv_) {
 	     {
                sigma_val=atof(argv_[++iarg]);
 	     }
-           else if (option=="-minmax")
+           else if (option=="-temp")
              {
-               min = atof(argv_[++iarg]);
-               max = atof(argv_[++iarg]);
+              temp = atof(argv_[++iarg]);
              }
 	  else
 	    {
@@ -93,7 +92,7 @@ int main (int argc_, char ** argv_) {
   amoeba::double_2d starts(3,2, -100.,-100.,  100.,30.,   10.,30.);
 
   //creating and putting the start data
-  my_amoeba ma(min,max);
+  my_amoeba ma(temp);
   ma.set_debug(debug);
   ma.set_warn(false);
   //the deltas are for the resolution (1°) and the difference between the already scanned values.

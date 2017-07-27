@@ -11,16 +11,15 @@ else()
     set(LIBSUFFIX "")
 endif()
 
-#keeping root elements for possible tests
-#include(FindROOT.cmake)
-#root for tests
+if (ENABLE_ROOT)
+   include(FindROOT.cmake)
+   #root for tests
 
+   link_directories(${ROOT_LIBRARY_DIR})
+   include_directories(${ROOT_INCLUDE_DIR})
+   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DENABLE_ROOT=1 ${ROOT_LIBRARIES}")
 
-#link_directories(${ROOT_LIBRARY_DIR})
-#link_directories($ENV{LIBCONFIG_ROOT/lib})
-
-#include_directories(${ROOT_INCLUDE_DIR})
-
+endif ()
 
 
 # (4) organize project libraries
@@ -48,8 +47,8 @@ file(GLOB test_headers tests/include/)
 #message (${sources})
 #message (${test_sources})
 
-file(GLOB PROGRAMS programs/[a-zA-Z1-9]*.cxx)
-file(GLOB TESTS tests/[a-zA-Z1-9]*.cxx)
+file(GLOB PROGRAMS programs/[_a-zA-Z1-9]*.cxx)
+file(GLOB TESTS tests/[_a-zA-Z1-9]*.cxx)
 include_directories (${headers})
 
 # (5) set the needed cflags

@@ -114,8 +114,9 @@ namespace icedcode {
   unsigned int get_counter () const {return __counter;}
   const double_2d& get_limits () const {return __limits;};
 
+  void set_save_steps (bool b_=true) {__save_steps=b_;}
   const std::vector<const point*>& get_saved_steps () const { return __saved_steps_list;}
-
+  void flush_saved_steps ();
   protected:
   void set_PQR (const point& p_, unsigned int pos_);
   unsigned int PQR_size () const {return __PQRsize;}

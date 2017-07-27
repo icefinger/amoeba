@@ -8,7 +8,7 @@
 
 #ifdef ENABLE_ROOT
 #include <TGraph.h>
-void save_visu (char *);
+void save_visu (const char* file_root_, const icedcode::amoeba& am_);
 #endif
 
 using namespace std;
@@ -87,6 +87,7 @@ int main (int argc_, char ** argv_) {
   //creating and putting the start data
   my_amoeba ma;
   ma.set_debug(debug);
+  ma.set_save_steps (visu);
   //the deltas are for the resolution (1°) and the difference between the already scanned values.
   ma.set_delta(0.1,0.1);
 
@@ -97,7 +98,8 @@ int main (int argc_, char ** argv_) {
   result=ma.find_min ();
 
 #ifdef ENABLE_ROOT
-  save_visu ("meh", ma);
+  if (visu)
+    save_visu ("meh", ma);
 #endif
 
   cout << "results " << result << " in " << ma.get_counter () << " counts" << endl;
@@ -108,6 +110,10 @@ int main (int argc_, char ** argv_) {
 #ifdef ENABLE_ROOT
 void save_visu (const char* file_root_, const amoeba& am_)
 {
-  const vector<amoeba::point*> &saved_points = am_.get_saved_steps ();
+  const vector<const amoeba::point*> &saved_points = am_.get_saved_steps ();
+  for (const auto& it: saved_points)
+    graph->SetPoint (i++, it[0]);
+
+
 }
 #endif
