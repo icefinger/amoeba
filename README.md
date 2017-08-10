@@ -1,9 +1,20 @@
 # Amoeba
 ## Summary
-Minimization algorithms using amoeba, random scanning and annealing.
+Minimization algorithms using the Nelder-Mead method, so-called amoeba, random scanning and simulated annealing.
 The documentation can be found here: https://www.ge.infn.it/~chugon/Amoeba/html/
 
 The examples on how to use each of the methods are in programs/test_*.cxx
+
+## Description
+The Nelder–Mead technique is a heuristic applied method to find out the minimum or maximum of an objective function in a multidimensional space (proposed by John Nelder & Roger Mead in 1965).
+The method uses the concept of a simplex, which is a special polytope of n + 1 vertices in n dimensions. Examples of simplices include a line segment on a line, a triangle on a plane, a tetrahedron in three-dimensional space and so forth. This implementation accepts functions from 1 to any arbitrary dimensions. The processus is illustrated in the next figure. The strengh of this method is it's few steps to find the minimum, the weakness is it's tendency to find local minimums.
+
+To have a probability to escape local minimums this implementation include a simple random scanning around the minimum leg of the amoeba. This scan is based on so-called noses that, at each step test a point around the minimum leg following a gaussian distribution with an arbitrary sigma. More than a method in itself, this naive approach prepares the next principal process.
+
+The next step includes the simulated annealing method (Černý, V. (1985)) applied to the "lowest" leg of the amoeba. The process start with a temperature (this implementation propose an arbitrary initial temperature or an evolutive one following the minimums and maximums explored by the amoeba). At each step the temperature decreases. Bigger is the temperature, more probable the "nose" with higher value than the minimum leg replaces it. It keeps in memory the minimum it already met, so if it escapes from the true minimum, it will come back to it.
+
+![Amoeba illustration](./doc/images/amoeba.gif)
+![Amoeba+annealing illustration](./doc/images/amoebaPlusAnnealing.gif)
 
 ## Compilation:
 
