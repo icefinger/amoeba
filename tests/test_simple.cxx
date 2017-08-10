@@ -5,9 +5,9 @@
 #include <sys/time.h>
 #include <ctime>
 #include <cmath>
+#include <Tools.h>
 
 #ifdef ENABLE_ROOT
-#include <TGraph.h>
 void save_visu (const char* file_root_, const icedcode::amoeba& am_);
 #endif
 
@@ -25,10 +25,12 @@ public:
   //only get_value is absolutly required. It should return the value at the coordinates in coord_ (can be illimited in dimension)
   double get_value (const double_1d& x_)
   {
-    double value=-100*(exp(-((x_[0]*x_[0]-4))/7200)+exp(-((x_[1]*x_[1]+4))/7200)-sin (x_[0]/50)-sin(x_[1]/50));
-
+    //double value=-100*(exp(-((x_[0]*x_[0]-4))/7200)+exp(-((x_[1]*x_[1]+4))/7200)-sin (x_[0]/20)-sin(x_[1]/20));
+    double value = global_get_value (x_.data (), 0);
     return value;
+
   }
+
 };
 
 
@@ -99,7 +101,7 @@ int main (int argc_, char ** argv_) {
 
 #ifdef ENABLE_ROOT
   if (visu)
-    save_visu ("meh", ma);
+    save_visu ("simpleDraw", ma);
 #endif
 
   cout << "results " << result << " in " << ma.get_counter () << " counts" << endl;
@@ -108,12 +110,28 @@ int main (int argc_, char ** argv_) {
 }
 
 #ifdef ENABLE_ROOT
-void save_visu (const char* file_root_, const amoeba& am_)
+#include <Drawer.h>
+#include <TGraph.h>
+#include <TFile.h>
+#include <TCanvas.h>
+#include <TH1F.h>
+#include <TF2.h>
+
+void save_visu (const char* name_root_file_, const amoeba& am_)
 {
-  const vector<const amoeba::point*> &saved_points = am_.get_saved_steps ();
-  for (const auto& it: saved_points)
-    graph->SetPoint (i++, it[0]);
+  TF2* f=new TF2("func", global_get_value, -180, 180, -180, 180);
+  f->SetNpx (300);
+  TCanvas *canvas = new TCanvas;
 
-
+  for (size_t i = 0; i<am_.get_saved_steps ().size ();i++)
+    {
+      TGraph *graph = get_PQR_graph (am_, i);
+      f->Draw ();
+      graph->Draw ("same");
+      string name = name_root_file_;
+      name = name+to_string (i)+".png";
+      canvas->SaveAs (name.data());
+      delete (graph);
+    }
 }
 #endif

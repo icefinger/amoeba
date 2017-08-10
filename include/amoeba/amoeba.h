@@ -78,7 +78,7 @@ namespace icedcode {
   public:
     virtual ~point () {}
     point (bool min_max_=true);
-
+    point (const point& pt_);
     void set_pos (const double_1d&); /**< Putting pos using directly the mother class */
     double get_value () const {return __val;} /**< Getting the current value. Calculated when the coordinate are changed. */
     void reinit (bool min_max_=false);
@@ -115,7 +115,8 @@ namespace icedcode {
   const double_2d& get_limits () const {return __limits;};
 
   void set_save_steps (bool b_=true) {__save_steps=b_;}
-  const std::vector<const point*>& get_saved_steps () const { return __saved_steps_list;}
+  bool get_save_steps () const {return __save_steps;}
+  const std::vector<const point*>& get_saved_steps () const {return __saved_steps_list;}
   void flush_saved_steps ();
   protected:
   void set_PQR (const point& p_, unsigned int pos_);
@@ -132,6 +133,7 @@ namespace icedcode {
   void __classify ();
   void __check_limits ();
   bool __check_starts (const double_2d &starts_) const;
+  void __save_current_step ();
 
   //for inerited classes. For complementary works in find_min
   virtual bool user_work () {return false;}

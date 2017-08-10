@@ -23,24 +23,13 @@ endif ()
 
 
 # (4) organize project libraries
-file(GLOB sources ./src/[a-zA-Z0-9]*.cc)
-file(GLOB headers ./include/*)
+file(GLOB sources ./src/[_a-zA-Z0-9]*.cc)
+file(GLOB headers include/*)
+message (${headers})
 
-foreach(adir IN LISTS sources)
-  if (adir MATCHES .*/tests/+src.*)
-    list (REMOVE_ITEM sources ${adir})
-  endif ()
-endforeach ()
+file(GLOB test_sources ./tests/src/[_a-zA-Z0-9]*.cc)
+file(GLOB test_headers tests/include)
 
-foreach(adir IN LISTS headers)
-  if (adir MATCHES .*/tests/+include/)
-    list (REMOVE_ITEM headers ${adir})
-  endif ()
-endforeach ()
-
-
-file(GLOB test_sources tests/src/[a-zA-Z0-9]*.cc)
-file(GLOB test_headers tests/include/)
 
 #list(REMOVE_ITEM sources ${test_sources})
 
@@ -50,6 +39,9 @@ file(GLOB test_headers tests/include/)
 file(GLOB PROGRAMS programs/[_a-zA-Z1-9]*.cxx)
 file(GLOB TESTS tests/[_a-zA-Z1-9]*.cxx)
 include_directories (${headers})
+if(ENABLE_TESTING)
+        include_directories (${test_headers})
+endif(ENABLE_TESTING)
 
 # (5) set the needed cflags
 SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -pedantic -Wno-non-virtual-dtor -Wno-long-long -Wwrite-strings -Wpointer-arith -Woverloaded-virtual -Wno-variadic-macros -Wshadow -pipe -std=c++11 -DPROJECT_SOURCE_DIR=\\\"${PROJECT_SOURCE_DIR}\\\"")
@@ -90,14 +82,14 @@ if(ENABLE_TESTING)
   SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DENABLE_TESTING=1")
   foreach(aprog IN LISTS TESTS)
     get_filename_component(aprogname ${aprog} NAME_WE)
-    add_executable(${aprogname} ${aprog} ${headers} ${test_headers})
+    add_executable(${aprogname} ${aprog})
     target_link_libraries(${aprogname} amoeba)
   endforeach ()
 else(ENABLE_TESTING)
   add_library(amoeba SHARED ${sources})
   foreach(aprog IN LISTS PROGRAMS)
     get_filename_component(aprogname ${aprog} NAME_WE)
-    add_executable(${aprogname} ${aprog} ${headers})
+    add_executable(${aprogname} ${aprog})
     target_link_libraries(${aprogname} amoeba)
   endforeach ()
 endif(ENABLE_TESTING)

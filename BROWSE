@@ -1,130 +1,230 @@
-[ebrowse-hs "ebrowse 5.0" " -x" () ()][ebrowse-ts [ebrowse-cs "amoeba" () 0"include/amoeba/amoeba.h" "class amoeba {" 102"src/amoeba.cc" ]
-([ebrowse-ts [ebrowse-cs "nosy" () 0"include/amoeba/nosy.h" "class nosy :" 90"src/nosy.cc" ]
-([ebrowse-ts [ebrowse-cs "annealing" () 0"include/amoeba/annealing.h" "class annealing :" 77"src/annealing.cc" ]
-()([ebrowse-ms "__decrease_fact" () 0 () "  double __decrease_fact;" 625 2  () () 0]
-[ebrowse-ms "__evol" () 0 () "  bool __evol;" 575 2  () () 0]
-[ebrowse-ms "__heat_counter" () 0 () "  unsigned int __heat_counter;" 656 2  () () 0]
-[ebrowse-ms "__init" () 0 () "  bool __init;" 703 2  () () 0]
-[ebrowse-ms "__max" () 0 () "  double __max;" 688 2  () () 0]
-[ebrowse-ms "__min" () 0 () "  double __min;" 672 2  () () 0]
-[ebrowse-ms "__temperature" () 0 () "  double __temperature;" 599 2  () () 0]
+[ebrowse-hs "ebrowse 5.0" " -x" () ()][ebrowse-ts [ebrowse-cs "amoeba" "icedcode" 0"include/amoeba/amoeba.h" "  class amoeba {" 713"src/amoeba.cc" ]
+([ebrowse-ts [ebrowse-cs "nosy" "icedcode" 0"include/amoeba/nosy.h" "  class nosy :" 657"src/nosy.cc" ]
+([ebrowse-ts [ebrowse-cs "annealing" "icedcode" 0"include/amoeba/annealing.h" "  class annealing :" 510"src/annealing.cc" ]
+()([ebrowse-ms "__evol" () 0 () "    bool __evol;" 2163 2  () () 0]
+[ebrowse-ms "__global_decrease_fact" () 0 () "    double __global_decrease_fact;" 2118 2  () () 0]
+[ebrowse-ms "__global_temperature" () 0 () "    double __global_temperature = -1;" 2045 2  () () 0]
+[ebrowse-ms "__init" () 0 () "    bool __init;" 2146 2  () () 0]
 )
-([ebrowse-ms "__evol_temperature" () 0 () "  void __evol_temperature (double" 456 2  () "void annealing::__evol_temperature (double" 1196]
-[ebrowse-ms "__init_annealing" () 0 () "  void __init_annealing ()" 516 2  () "void annealing::__init_annealing ()" 308]
-[ebrowse-ms "accept" () 1 () "  bool accept (double" 539 2  () "bool annealing::accept (double" 623]
-[ebrowse-ms "annealing" () 0 () "  annealing (double min_=-1., double max_=-1);" 120 0  () "nnealing::annealing (double min_, double max_)
-{" 151]
-[ebrowse-ms "get_decrease" () 4 () "  double get_decrease ()" 318 0  "include/amoeba/annealing.h" "  double get_decrease ()" 318]
-[ebrowse-ms "get_temperature" () 4 () "  double get_temperature ()" 201 0  "include/amoeba/annealing.h" "  double get_temperature ()" 201]
-[ebrowse-ms "set_decrease" () 0 () "  void set_decrease (const" 377 0  "include/amoeba/annealing.h" "  void set_decrease (const" 377]
-[ebrowse-ms "set_temperature" () 0 () "  void set_temperature (const" 261 0  "include/amoeba/annealing.h" "  void set_temperature (const" 261]
-[ebrowse-ms "~annealing" () 1 () "  virtual ~annealing ()" 171 0  () "annealing::~annealing ()" 267]
+([ebrowse-ms "__init_annealing" () 0 () "    void __init_annealing ()" 1966 2  () "  void annealing::__init_annealing ()" 340]
+[ebrowse-ms "annealing" () 0 () "    annealing (double temperature_ = -1);" 558 0  () "  annealing::annealing (double temperature_)
+  {" 153]
+[ebrowse-ms "set_global_temperature" () 0 () "    void set_global_temperature (double" 1007 0  () () 0]
+[ebrowse-ms "user_accept_ending" () 1 () "    virtual bool user_accept_ending ()" 2006 2  () "  bool annealing::user_accept_ending ()" 1082]
+[ebrowse-ms "~annealing" () 1 () "    virtual ~annealing ()" 965 0  () "  annealing::~annealing ()" 293]
+)
+([ebrowse-ms "__mean_temperature" () 0 () "    static double __mean_temperature;" 2083 2  () () 0]
+[ebrowse-ms "__minimal_met" () 0 () "    static point __minimal_met;" 2195 2  () () 0]
+)
+()
+()
+()
+()()
+])([ebrowse-ms "__normal" () 0 () "  bool __normal;" 2777 1  () () 0]
+[ebrowse-ms "__noses" () 0 () "  std::list<nose*> __noses;" 2760 1  () () 0]
+[ebrowse-ms "__sigma" () 0 () "  double_1d __sigma;" 2813 1  () () 0]
+[ebrowse-ms "__warn" () 0 () "  bool __warn;" 2792 1  () () 0]
+)
+([ebrowse-ms "__add_nose" () 1 () "    virtual void __add_nose (unsigned" 1389 2  () "  void nosy::__add_nose (unsigned" 886]
+[ebrowse-ms "__check_noses" () 5 () "    virtual bool __check_noses (const" 1490 2  () "  bool nosy::__check_noses (const" 1597]
+[ebrowse-ms "get_value" () 9 () "    virtual double get_value (const" 1435 2  () () 0]
+[ebrowse-ms "nb_noses" () 4 () "    size_t nb_noses ()" 1269 0  () "  size_t nosy::nb_noses ()" 729]
+[ebrowse-ms "nosy" () 0 () "    nosy ();" 726 0  () "  nosy::nosy ()
+  {" 174]
+[ebrowse-ms "rm_noses" () 0 () "    void rm_noses ()" 1297 0  () "  void nosy::rm_noses ()" 625]
+[ebrowse-ms "set_noses" () 1 () "    virtual void set_noses (const" 1072 0  () "  void nosy::set_noses (const" 501]
+[ebrowse-ms "set_warn" () 0 () "    void set_warn (bool" 1322 0  "include/amoeba/nosy.h" "    void set_warn (bool" 1322]
+[ebrowse-ms "user_work" () 1 () "    virtual bool user_work ()" 1547 2  () "  bool nosy::user_work ()" 1185]
+[ebrowse-ms "~nosy" () 1 () "    virtual ~nosy ()" 748 0  () "  nosy::~nosy ()" 237]
 )
 ()
 ()
 ()
 ()
 ()()
-])([ebrowse-ms "__normal" () 0 () "  bool __normal;" 706 2  () () 0]
-[ebrowse-ms "__noses" () 0 () "  std::list<point> __noses;" 689 2  () () 0]
-[ebrowse-ms "__r" () 0 () "  gsl_rng * __r;" 769 1  () () 0]
-[ebrowse-ms "__sigma" () 0 () "  double* __sigma;" 740 2  () () 0]
-[ebrowse-ms "__warn" () 0 () "  bool __warn;" 721 2  () () 0]
+])([ebrowse-ms "__PQR" () 0 () "  point* __PQR;" 6132 2  () () 0]
+[ebrowse-ms "__PQRsize" () 0 () "  unsigned __PQRsize;" 6154 2  () () 0]
+[ebrowse-ms "__contract" () 0 () "  double __contract;" 6009 2  () () 0]
+[ebrowse-ms "__counter" () 0 () "  unsigned int __counter;" 6035 2  () () 0]
+[ebrowse-ms "__debug" () 0 () "  bool __debug;" 6051 2  () () 0]
+[ebrowse-ms "__delta_pos" () 0 () "  double __delta_pos;" 5967 2  () () 0]
+[ebrowse-ms "__delta_val" () 0 () "  double __delta_val;" 5945 2  () () 0]
+[ebrowse-ms "__extrapol" () 0 () "  double __extrapol;" 5988 2  () () 0]
+[ebrowse-ms "__has_limits" () 0 () "  bool __has_limits;" 6072 2  () () 0]
+[ebrowse-ms "__init" () 0 () "  bool __init;" 6087 2  () () 0]
+[ebrowse-ms "__limits" () 0 () "  double_2d __limits;" 6176 2  () () 0]
+[ebrowse-ms "__save_steps" () 0 () "  bool __save_steps = false;" 6116 2  () () 0]
+[ebrowse-ms "__saved_steps_list" () 0 () "  std::vector<const point*> __saved_steps_list;" 6225 2  () () 0]
 )
-([ebrowse-ms "__add_nose" () 0 () "  void __add_nose (unsigned" 440 2  () "void nosy::__add_nose (unsigned" 784]
-[ebrowse-ms "__check_noses" () 4 () "  bool __check_noses (const" 529 2  () "bool nosy::__check_noses (const" 2120]
-[ebrowse-ms "accept" () 1 () "  virtual bool accept (double" 625 2  "include/amoeba/nosy.h" "  virtual bool accept (double" 625]
-[ebrowse-ms "add_nose" () 0 () "  void add_nose (double" 235 0  () "void nosy::add_nose (double" 635]
-[ebrowse-ms "add_nose" () 0 () "  void add_nose (const" 170 0  () "void nosy::add_nose (const" 434]
-[ebrowse-ms "get_value" () 9 () "  virtual double get_value (const" 484 2  () () 0]
-[ebrowse-ms "nb_noses" () 4 () "  unsigned int nb_noses ()" 292 0  "include/amoeba/nosy.h" "  unsigned int nb_noses ()" 292]
-[ebrowse-ms "nosy" () 0 () "  nosy ();" 125 0  () "nosy::nosy ()
-{" 178]
-[ebrowse-ms "rm_noses" () 0 () "  void rm_noses ()" 342 0  "include/amoeba/nosy.h" "  void rm_noses ()" 342]
-[ebrowse-ms "set_warn" () 0 () "  void set_warn (bool" 384 0  "include/amoeba/nosy.h" "  void set_warn (bool" 384]
-[ebrowse-ms "user_work" () 1 () "  void user_work ()" 594 2  () "void nosy::user_work ()" 949]
-[ebrowse-ms "~nosy" () 1 () "  virtual ~nosy ()" 145 0  () "nosy::~nosy ()" 380]
+([ebrowse-ms "PQR_size" () 4 () "  unsigned int PQR_size ()" 5256 1  "include/amoeba/amoeba.h" "  unsigned int PQR_size ()" 5256]
+[ebrowse-ms "__check_limits" () 0 () "  void __check_limits ()" 5618 2  () "  void amoeba::__check_limits ()" 3946]
+[ebrowse-ms "__check_starts" () 4 () "  bool __check_starts (const" 5648 2  () "  bool amoeba::__check_starts(const" 2417]
+[ebrowse-ms "__classify" () 0 () "  void __classify ()" 5592 2  () "  void amoeba::__classify ()" 2998]
+[ebrowse-ms "__contractP" () 0 () "  void __contractP (point" 5543 2  () "  void amoeba::__contractP (point" 5215]
+[ebrowse-ms "__contractToR" () 0 () "  void __contractToR ()" 5570 2  () "  void amoeba::__contractToR ( )" 4931]
+[ebrowse-ms "__extrapolateP" () 0 () "  void __extrapolateP (point" 5514 2  () "  void amoeba::__extrapolateP (point" 5340]
+[ebrowse-ms "__init_PQR" () 0 () "  void __init_PQR (const" 5441 2  () "  void amoeba::__init_PQR (const" 5738]
+[ebrowse-ms "__reflectP" () 0 () "  point __reflectP ()" 5484 2  () "  amoeba::point amoeba::__reflectP ()" 5466]
+[ebrowse-ms "__save_current_step" () 0 () "  void __save_current_step ()" 5705 2  () "  void amoeba::__save_current_step ()" 1219]
+[ebrowse-ms "amoeba" () 0 () "  amoeba ();" 3601 0  () "  amoeba::amoeba ()
+  {" 176]
+[ebrowse-ms "find_min" () 0 () "  point find_min ( )" 3646 0  () "  amoeba::point amoeba::find_min ( )" 1416]
+[ebrowse-ms "flush_saved_steps" () 0 () "  void flush_saved_steps ()" 5162 0  () "  void amoeba::flush_saved_steps ()" 2339]
+[ebrowse-ms "get_PQR" () 4 () "  const point& get_PQR (unsigned" 5315 1  "include/amoeba/amoeba.h" "  const point& get_PQR (unsigned" 5315]
+[ebrowse-ms "get_counter" () 4 () "  unsigned int get_counter ()" 4902 0  "include/amoeba/amoeba.h" "  unsigned int get_counter ()" 4902]
+[ebrowse-ms "get_limits" () 4 () "  const double_2d& get_limits ()" 4961 0  "include/amoeba/amoeba.h" "  const double_2d& get_limits ()" 4961]
+[ebrowse-ms "get_saved_steps" () 4 () "st std::vector<const point*>& get_saved_steps ()" 5098 0  "include/amoeba/amoeba.h" "st std::vector<const point*>& get_saved_steps ()" 5098]
+[ebrowse-ms "get_value" () 9 () "  virtual double get_value (const" 5399 2  () () 0]
+[ebrowse-ms "set_PQR" () 0 () "  void set_PQR (const" 5198 1  () "  void amoeba::set_PQR (const" 940]
+[ebrowse-ms "set_contract" () 0 () "  void set_contract (double" 4406 0  "include/amoeba/amoeba.h" "  void set_contract (double" 4406]
+[ebrowse-ms "set_debug" () 0 () "  void set_debug (bool" 4558 0  "include/amoeba/amoeba.h" "  void set_debug (bool" 4558]
+[ebrowse-ms "set_delta" () 0 () "  void set_delta (double" 4014 0  "include/amoeba/amoeba.h" "  void set_delta (double" 4014]
+[ebrowse-ms "set_extrapol" () 0 () "  void set_extrapol (double" 4251 0  "include/amoeba/amoeba.h" "  void set_extrapol (double" 4251]
+[ebrowse-ms "set_limit" () 0 () "  void set_limit (double" 4609 0  () "  void amoeba::set_limit (double" 490]
+[ebrowse-ms "set_limits" () 0 () "  void set_limits (const" 4718 0  () "  void amoeba::set_limits (const" 790]
+[ebrowse-ms "set_save_steps" () 0 () "  void set_save_steps (bool" 5016 0  "include/amoeba/amoeba.h" "  void set_save_steps (bool" 5016]
+[ebrowse-ms "set_starts" () 0 () "  void set_starts (const" 3737 0  () "  void amoeba::set_starts (const" 1073]
+[ebrowse-ms "user_accept_ending" () 1 () "  virtual bool user_accept_ending ()" 5896 2  "include/amoeba/amoeba.h" "  virtual bool user_accept_ending ()" 5896]
+[ebrowse-ms "user_work" () 1 () "  virtual bool user_work ()" 5797 2  "include/amoeba/amoeba.h" "  virtual bool user_work ()" 5797]
+[ebrowse-ms "~amoeba" () 1 () "  virtual ~amoeba ()" 3623 0  () "  amoeba::~amoeba ()" 383]
+)
+()
+()
+()
+([ebrowse-ms "double_1d_cit" () 0 () "d::vector<double>::const_iterator double_1d_cit;" 2395 0  () () 0]
+[ebrowse-ms "double_1d_it" () 0 () "edef std::vector<double>::iterator double_1d_it;" 2275 0  () () 0]
+[ebrowse-ms "double_2d_cit" () 0 () "ector<double_1d >::const_iterator double_2d_cit;" 2460 0  () () 0]
+[ebrowse-ms "double_2d_it" () 0 () " std::vector<double_1d >::iterator double_2d_it;" 2333 0  () () 0]
+)
+()()
+][ebrowse-ts [ebrowse-cs "std" "icedcode" 0() () 0() ]
+()()
+()
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "std" () 0() () 0"src/amoeba.cc" ]
+()()
+([ebrowse-ms "operator <<" () 0 () () 0 0  "include/amoeba/amoeba.h" "std::ostream& operator<<(std" 6349]
 )
 ()
 ()
 ()
 ()
 ()()
-])([ebrowse-ms "__PQR" () 0 () "  point* __PQR;" 2581 2  () () 0]
-[ebrowse-ms "__PQRsize" () 0 () "  unsigned __PQRsize;" 2603 2  () () 0]
-[ebrowse-ms "__contract" () 0 () "  double __contract;" 2487 2  () () 0]
-[ebrowse-ms "__counter" () 0 () "  unsigned int __counter;" 2513 2  () () 0]
-[ebrowse-ms "__debug" () 0 () "  bool __debug;" 2529 2  () () 0]
-[ebrowse-ms "__delta_pos" () 0 () "  double __delta_pos;" 2445 2  () () 0]
-[ebrowse-ms "__delta_val" () 0 () "  double __delta_val;" 2423 2  () () 0]
-[ebrowse-ms "__extrapol" () 0 () "  double __extrapol;" 2466 2  () () 0]
-[ebrowse-ms "__has_limits" () 0 () "  bool __has_limits;" 2550 2  () () 0]
-[ebrowse-ms "__init" () 0 () "  bool __init;" 2565 2  () () 0]
-[ebrowse-ms "__limits" () 0 () "  double_2d __limits;" 2625 2  () () 0]
+][ebrowse-ts [ebrowse-cs "point" "icedcode" 0() () 0() ]
+([ebrowse-ts [ebrowse-cs "nose" "icedcode::nosy" 0"include/amoeba/nosy.h" "    class nose:" 1749"src/nosy.cc" ]
+()([ebrowse-ms "__generator" () 0 () "    std::default_random_engine __generator;" 2599 1  () () 0]
+[ebrowse-ms "__has_been_changed" () 0 () () 0 0  () "  bool nosy::nose::__has_been_changed = 0;" 4085]
+[ebrowse-ms "__id" () 0 () "    size_t __id = 0;" 2434 1  () () 0]
+[ebrowse-ms "__normal_distribution" () 0 () "rmal_distribution<double> __normal_distribution;" 2659 1  () () 0]
+[ebrowse-ms "__nosy" () 0 () () 0 0  () "  nosy* nosy::nose::__nosy;" 4113]
+[ebrowse-ms "__sigma" () 0 () "    double __sigma = -1;" 2459 1  () () 0]
+[ebrowse-ms "__total_noses" () 0 () () 0 0  () "  size_t nosy::nose::__total_noses = 0;" 4042]
+[ebrowse-ms "__uniform_distribution" () 0 () "eal_distribution<double> __uniform_distribution;" 2726 1  () () 0]
 )
-([ebrowse-ms "PQR_size" () 4 () "  unsigned int PQR_size ()" 2012 1  "include/amoeba/amoeba.h" "  unsigned int PQR_size ()" 2012]
-[ebrowse-ms "__check_limits" () 0 () "  void __check_limits ()" 2302 2  () "void amoeba::__check_limits ()" 2956]
-[ebrowse-ms "__check_starts" () 4 () "  bool __check_starts (const" 2332 2  () "bool amoeba::__check_starts(const" 1712]
-[ebrowse-ms "__classify" () 0 () "  void __classify ()" 2276 2  () "void amoeba::__classify ()" 2227]
-[ebrowse-ms "__contractP" () 0 () "  void __contractP (point" 2227 2  () "void amoeba::__contractP (point" 3987]
-[ebrowse-ms "__contractToR" () 0 () "  void __contractToR ()" 2254 2  () "void amoeba::__contractToR ( )" 3734]
-[ebrowse-ms "__extrapolateP" () 0 () "  void __extrapolateP (point" 2198 2  () "void amoeba::__extrapolateP (point" 4119]
-[ebrowse-ms "__init_PQR" () 0 () "  void __init_PQR (const" 2125 2  () "void amoeba::__init_PQR (const" 4504]
-[ebrowse-ms "__reflectP" () 0 () "  point __reflectP ()" 2168 2  () "amoeba::point amoeba::__reflectP ()" 4254]
-[ebrowse-ms "amoeba" () 0 () "  amoeba ();" 1259 0  () "amoeba::amoeba ()
-{" 134]
-[ebrowse-ms "find_min" () 0 () "  point find_min ( )" 1304 0  () "amoeba::point amoeba::find_min ( )" 1058]
-[ebrowse-ms "get_PQR" () 4 () "  const point& get_PQR (unsigned" 1947 1  "include/amoeba/amoeba.h" "  const point& get_PQR (unsigned" 1947]
-[ebrowse-ms "get_counter" () 4 () "  unsigned int get_counter ()" 1764 0  "include/amoeba/amoeba.h" "  unsigned int get_counter ()" 1764]
-[ebrowse-ms "get_limits" () 4 () "  const double_2d& get_limits ()" 1823 0  "include/amoeba/amoeba.h" "  const double_2d& get_limits ()" 1823]
-[ebrowse-ms "get_value" () 9 () "  virtual double get_value (const" 2083 2  () () 0]
-[ebrowse-ms "set_PQR" () 0 () "  void set_PQR (const" 1883 1  () "void amoeba::set_PQR (const" 804]
-[ebrowse-ms "set_contract" () 0 () "  void set_contract (double" 1550 0  "include/amoeba/amoeba.h" "  void set_contract (double" 1550]
-[ebrowse-ms "set_debug" () 0 () "  void set_debug (bool" 1606 0  "include/amoeba/amoeba.h" "  void set_debug (bool" 1606]
-[ebrowse-ms "set_delta" () 0 () "  void set_delta (double" 1377 0  "include/amoeba/amoeba.h" "  void set_delta (double" 1377]
-[ebrowse-ms "set_extrapol" () 0 () "  void set_extrapol (double" 1485 0  "include/amoeba/amoeba.h" "  void set_extrapol (double" 1485]
-[ebrowse-ms "set_limit" () 0 () "  void set_limit (double" 1657 0  () "void amoeba::set_limit (double" 388]
-[ebrowse-ms "set_limits" () 0 () "  void set_limits (const" 1721 0  () "void amoeba::set_limits (const" 666]
-[ebrowse-ms "set_starts" () 0 () "  void set_starts (const" 1331 0  () "void amoeba::set_starts (const" 925]
-[ebrowse-ms "user_work" () 1 () "  virtual void user_work ()" 2387 2  "include/amoeba/amoeba.h" "  virtual void user_work ()" 2387]
-[ebrowse-ms "~amoeba" () 1 () "  virtual ~amoeba ()" 1281 0  () "amoeba::~amoeba ()" 317]
+([ebrowse-ms "AnyHasChanged" () 0 () "    bool AnyHasChanged ()" 1947 0  "include/amoeba/nosy.h" "    bool AnyHasChanged ()" 1947]
+[ebrowse-ms "GetSigma" () 4 () "    double GetSigma ()" 2093 0  "include/amoeba/nosy.h" "    double GetSigma ()" 2093]
+[ebrowse-ms "Process" () 0 () "    void Process ()" 1996 0  () "  void nosy::nose::Process ()" 2723]
+[ebrowse-ms "Reset" () 0 () "    void Reset ()" 1891 0  "include/amoeba/nosy.h" "    void Reset ()" 1891]
+[ebrowse-ms "Run" () 0 () "    void Run ()" 2013 0  "include/amoeba/nosy.h" "    void Run ()" 2013]
+[ebrowse-ms "SetSigma" () 0 () "    void SetSigma (double" 2042 0  "include/amoeba/nosy.h" "    void SetSigma (double" 2042]
+[ebrowse-ms "nose" () 0 () "    nose (nosy* nosy_);" 1847 0  () "  nosy::nose::nose (nosy* nose_)
+  {" 2499]
+[ebrowse-ms "user_work" () 1 () "    virtual bool user_work (const" 2362 1  "include/amoeba/nosy.h" "    virtual bool user_work (const" 2362]
+[ebrowse-ms "~nose" () 0 () "    ~nose ()" 1869 0  "include/amoeba/nosy.h" "    ~nose ()" 1869]
+)
+([ebrowse-ms "__has_been_changed" () 0 () "    static bool __has_been_changed;" 2528 1  () () 0]
+[ebrowse-ms "__nosy" () 0 () "    static nosy* __nosy;" 2553 1  () () 0]
+[ebrowse-ms "__total_noses" () 0 () "    static size_t __total_noses;" 2492 1  () () 0]
 )
 ()
 ()
 ()
-([ebrowse-ms "double_1d" () 0 () "  typedef std::list<double> double_1d;" 152 0  () () 0]
-[ebrowse-ms "double_1d_cit" () 0 () "std::list<double>::const_iterator double_1d_cit;" 380 0  () () 0]
-[ebrowse-ms "double_1d_it" () 0 () "ypedef std::list<double>::iterator double_1d_it;" 256 0  () () 0]
-[ebrowse-ms "double_2d" () 0 () "typedef std::list<std::list<double> > double_2d;" 203 0  () () 0]
-[ebrowse-ms "double_2d_cit" () 0 () "d::list<double> >::const_iterator double_2d_cit;" 451 0  () () 0]
-[ebrowse-ms "double_2d_it" () 0 () "list<std::list<double> >::iterator double_2d_it;" 320 0  () () 0]
-)
 ()()
-][ebrowse-ts [ebrowse-cs "point" "amoeba" 0"include/amoeba/amoeba.h" "  class point {" 469"src/amoeba.cc" ]
-()([ebrowse-ms "__am" () 0 () "    amoeba* __am;" 1231 2  () () 0]
-[ebrowse-ms "__pos" () 0 () "    double_1d __pos;" 1213 2  () () 0]
-[ebrowse-ms "__val" () 0 () "    double __val;" 1192 2  () () 0]
+])()
+()
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "Object" "icedcode::NProcess" 0() () 0() ]
+([ebrowse-ts [ebrowse-cs "nose" "icedcode::nosy" 0"include/amoeba/nosy.h" "    class nose:" 1749"src/nosy.cc" ]
+()([ebrowse-ms "__generator" () 0 () "    std::default_random_engine __generator;" 2599 1  () () 0]
+[ebrowse-ms "__has_been_changed" () 0 () () 0 0  () "  bool nosy::nose::__has_been_changed = 0;" 4085]
+[ebrowse-ms "__id" () 0 () "    size_t __id = 0;" 2434 1  () () 0]
+[ebrowse-ms "__normal_distribution" () 0 () "rmal_distribution<double> __normal_distribution;" 2659 1  () () 0]
+[ebrowse-ms "__nosy" () 0 () () 0 0  () "  nosy* nosy::nose::__nosy;" 4113]
+[ebrowse-ms "__sigma" () 0 () "    double __sigma = -1;" 2459 1  () () 0]
+[ebrowse-ms "__total_noses" () 0 () () 0 0  () "  size_t nosy::nose::__total_noses = 0;" 4042]
+[ebrowse-ms "__uniform_distribution" () 0 () "eal_distribution<double> __uniform_distribution;" 2726 1  () () 0]
 )
-([ebrowse-ms "get_pos" () 4 () "    const double_1d& get_pos ()" 607 0  "include/amoeba/amoeba.h" "    const double_1d& get_pos ()" 607]
-[ebrowse-ms "get_r" () 4 () "    double get_r ()" 649 0  () "double amoeba::point::get_r ()" 5748]
-[ebrowse-ms "get_value" () 4 () "    double get_value ()" 681 0  "include/amoeba/amoeba.h" "    double get_value ()" 681]
-[ebrowse-ms "operator *" () 4 () "    point operator*(double" 951 0  () "amoeba::point amoeba::point::operator* (double" 7956]
-[ebrowse-ms "operator +" () 4 () "    point operator+ (const" 832 0  () "amoeba::point amoeba::point::operator+ (const" 5955]
-[ebrowse-ms "operator -" () 4 () "    point operator- (const" 874 0  () "amoeba::point amoeba::point::operator- (const" 6473]
-[ebrowse-ms "operator /" () 4 () "    point operator/(double" 916 0  () "amoeba::point amoeba::point::operator/ (double" 7547]
-[ebrowse-ms "operator <" () 4 () "    bool operator<(const" 984 0  () "bool amoeba::point::operator< (const" 7282]
-[ebrowse-ms "operator <=" () 4 () "    bool operator<=(const" 1065 0  () "bool amoeba::point::operator<= (const" 7183]
-[ebrowse-ms "operator ==" () 4 () "    bool operator==(const" 1147 0  () "bool amoeba::point::operator==(const" 7380]
-[ebrowse-ms "operator >" () 4 () "    bool operator>(const" 1024 0  () "bool amoeba::point::operator> (const" 6984]
-[ebrowse-ms "operator >=" () 4 () "    bool operator>=(const" 1106 0  () "bool amoeba::point::operator>= (const" 7083]
-[ebrowse-ms "out" () 0 () "    void out ()" 803 0  () () 0]
-[ebrowse-ms "point" () 0 () "    point (bool min_max_=true);" 520 0  () "amoeba::point::point (bool min_max_)
-{" 5286]
-[ebrowse-ms "reinit" () 0 () "    void reinit (bool" 725 0  () "void amoeba::point::reinit (bool" 5597]
-[ebrowse-ms "set_amoeba" () 0 () "    void set_amoeba(amoeba" 769 0  "include/amoeba/amoeba.h" "    void set_amoeba(amoeba" 769]
-[ebrowse-ms "set_pos" () 0 () "    void set_pos (const" 562 0  () "void amoeba::point::set_pos (const" 5454]
-[ebrowse-ms "~point" () 1 () "    virtual ~point ()" 501 0  "include/amoeba/amoeba.h" "    virtual ~point ()" 501]
+([ebrowse-ms "AnyHasChanged" () 0 () "    bool AnyHasChanged ()" 1947 0  "include/amoeba/nosy.h" "    bool AnyHasChanged ()" 1947]
+[ebrowse-ms "GetSigma" () 4 () "    double GetSigma ()" 2093 0  "include/amoeba/nosy.h" "    double GetSigma ()" 2093]
+[ebrowse-ms "Process" () 0 () "    void Process ()" 1996 0  () "  void nosy::nose::Process ()" 2723]
+[ebrowse-ms "Reset" () 0 () "    void Reset ()" 1891 0  "include/amoeba/nosy.h" "    void Reset ()" 1891]
+[ebrowse-ms "Run" () 0 () "    void Run ()" 2013 0  "include/amoeba/nosy.h" "    void Run ()" 2013]
+[ebrowse-ms "SetSigma" () 0 () "    void SetSigma (double" 2042 0  "include/amoeba/nosy.h" "    void SetSigma (double" 2042]
+[ebrowse-ms "nose" () 0 () "    nose (nosy* nosy_);" 1847 0  () "  nosy::nose::nose (nosy* nose_)
+  {" 2499]
+[ebrowse-ms "user_work" () 1 () "    virtual bool user_work (const" 2362 1  "include/amoeba/nosy.h" "    virtual bool user_work (const" 2362]
+[ebrowse-ms "~nose" () 0 () "    ~nose ()" 1869 0  "include/amoeba/nosy.h" "    ~nose ()" 1869]
 )
+([ebrowse-ms "__has_been_changed" () 0 () "    static bool __has_been_changed;" 2528 1  () () 0]
+[ebrowse-ms "__nosy" () 0 () "    static nosy* __nosy;" 2553 1  () () 0]
+[ebrowse-ms "__total_noses" () 0 () "    static size_t __total_noses;" 2492 1  () () 0]
+)
+()
+()
+()
+()()
+])()
+()
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "nose" "icedcode" 0() () 0() ]
+([ebrowse-ts [ebrowse-cs "hot_nose" "icedcode::annealing" 0"include/amoeba/annealing.h" "    class hot_nose:" 1034"src/annealing.cc" ]
+()([ebrowse-ms "__decrease_fact" () 0 () "      double __decrease_fact;" 1704 2  () () 0]
+[ebrowse-ms "__evol" () 0 () "      bool __evol;" 1646 2  () () 0]
+[ebrowse-ms "__generator" () 0 () "      std::default_random_engine __generator;" 1787 2  () () 0]
+[ebrowse-ms "__nb_hot_noses" () 0 () () 0 0  () " size_t annealing::hot_nose::__nb_hot_noses = 0;" 2673]
+[ebrowse-ms "__normal_distribution" () 0 () "rmal_distribution<double> __normal_distribution;" 1849 2  () () 0]
+[ebrowse-ms "__temperature" () 0 () "      double __temperature;" 1674 2  () () 0]
+[ebrowse-ms "__uniform_distribution" () 0 () "eal_distribution<double> __uniform_distribution;" 1918 2  () () 0]
+)
+([ebrowse-ms "__evol_temperature" () 0 () "      void __evol_temperature (double" 1526 2  () " annealing::hot_nose::__evol_temperature (double" 2438]
+[ebrowse-ms "get_decrease" () 4 () "      double get_decrease ()" 1336 0  "include/amoeba/annealing.h" "      double get_decrease ()" 1336]
+[ebrowse-ms "get_temperature" () 4 () "      double get_temperature ()" 1173 0  "include/amoeba/annealing.h" "      double get_temperature ()" 1173]
+[ebrowse-ms "hot_nose" () 0 () " hot_nose (nosy* nosy_, double temperature_=-1);" 1085 0  () "e::hot_nose (nosy* nosy_, double temperature_) :" 1437]
+[ebrowse-ms "set_decrease" () 0 () "      void set_decrease (const" 1399 0  "include/amoeba/annealing.h" "      void set_decrease (const" 1399]
+[ebrowse-ms "set_temperature" () 0 () "      void set_temperature (const" 1237 0  "include/amoeba/annealing.h" "      void set_temperature (const" 1237]
+[ebrowse-ms "user_work" () 0 () "      bool user_work (const" 1590 2  () "  bool annealing::hot_nose::user_work (const" 1608]
+[ebrowse-ms "~hot_nose" () 0 () "      ~hot_nose ()" 1137 0  "include/amoeba/annealing.h" "      ~hot_nose ()" 1137]
+)
+([ebrowse-ms "__nb_hot_noses" () 0 () "      static size_t __nb_hot_noses;" 1740 2  () () 0]
+)
+()
+()
+()
+()()
+])()
+()
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "annealing" "icedcode::annealing" 0() () 0"src/annealing.cc" ]
+()([ebrowse-ms "__mean_temperature" () 0 () () 0 0  () "le annealing::annealing::__mean_temperature = 0;" 1342]
+[ebrowse-ms "__minimal_met" () 0 () () 0 0  () "eba::point  annealing::annealing::__minimal_met;" 1396]
+)
+()
 ()
 ()
 ()
@@ -141,22 +241,109 @@
 ()
 ()
 ()()
-][ebrowse-ts [ebrowse-cs "*Globals*" () 0() () 0"src/amoeba.cc" ]
-()([ebrowse-ms "std" () 0 () () 0 0  "src/nosy.cc" "using namespace std;" 163]
+][ebrowse-ts [ebrowse-cs "NProcess" "icedcode" 0() () 0() ]
+()()
+()
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "vector" "icedcode::std" 32() () 0() ]
+([ebrowse-ts [ebrowse-cs "double_1d" "icedcode::amoeba" 0"include/amoeba/amoeba.h" "    class double_1d:" 916"src/amoeba.cc" ]
+()()
+([ebrowse-ms "double_1d" () 0 () "      double_1d () {" 980 0  "include/amoeba/amoeba.h" "      double_1d () {" 980]
+[ebrowse-ms "double_1d" () 0 () "      double_1d (int n_, ...);" 1004 0  () "  amoeba::double_1d::double_1d(int n_, ...)
+  {" 6551]
+[ebrowse-ms "get_r" () 4 () "      double get_r ()" 1233 0  () "  double amoeba::double_1d::get_r ()" 6996]
+[ebrowse-ms "operator *" () 4 () "      double_1d operator*(double" 1465 0  () "::double_1d amoeba::double_1d::operator* (double" 7911]
+[ebrowse-ms "operator +" () 4 () "      double_1d operator+ (const" 1320 0  () "a::double_1d amoeba::double_1d::operator+ (const" 7153]
+[ebrowse-ms "operator -" () 4 () "      double_1d operator- (const" 1372 0  () "a::double_1d amoeba::double_1d::operator- (const" 7529]
+[ebrowse-ms "operator /" () 4 () "      double_1d operator/(double" 1424 0  () "::double_1d amoeba::double_1d::operator/ (double" 8112]
+[ebrowse-ms "operator <" () 4 () "      bool operator<(const" 1500 0  () "  bool amoeba::double_1d::operator< (const" 8301]
+[ebrowse-ms "operator <=" () 4 () "      bool operator<=(const" 1677 0  () "  bool amoeba::double_1d::operator<= (const" 8538]
+[ebrowse-ms "operator ==" () 4 () "      bool operator==(const" 1855 0  () "  bool amoeba::double_1d::operator== (const" 8778]
+[ebrowse-ms "operator >" () 4 () "      bool operator>(const" 1588 0  () "  bool amoeba::double_1d::operator> (const" 8419]
+[ebrowse-ms "operator >=" () 4 () "      bool operator>=(const" 1766 0  () "  bool amoeba::double_1d::operator>= (const" 8658]
+[ebrowse-ms "set_pos" () 0 () "      void set_pos (int" 1130 0  () "  void amoeba::double_1d::set_pos(int" 6767]
+[ebrowse-ms "~double_1d" () 0 () "      ~double_1d ()" 1102 0  "include/amoeba/amoeba.h" "      ~double_1d ()" 1102]
 )
 ()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "double_2d" "icedcode::amoeba" 0"include/amoeba/amoeba.h" "  class double_2d:" 2002"src/amoeba.cc" ]
+()()
+([ebrowse-ms "double_2d" () 0 () "    double_2d () {" 2064 0  "include/amoeba/amoeba.h" "    double_2d () {" 2064]
+[ebrowse-ms "double_2d" () 0 () "    double_2d (int n_, ...);" 2086 0  () "  amoeba::double_2d::double_2d(int n_, ...)
+  {" 9063]
+[ebrowse-ms "~double_2d" () 0 () "    ~double_2d ()" 2188 0  "include/amoeba/amoeba.h" "    ~double_2d ()" 2188]
+)
+()
+()
+()
+()
+()()
+])()
+()
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "double_1d" "icedcode" 0() () 0() ]
+([ebrowse-ts [ebrowse-cs "point" "icedcode::amoeba" 0"include/amoeba/amoeba.h" "  class point:" 2574"src/amoeba.cc" ]
+()([ebrowse-ms "__am" () 0 () "    amoeba* __am;" 3572 2  () () 0]
+[ebrowse-ms "__val" () 0 () "    double __val;" 3554 2  () () 0]
+)
+([ebrowse-ms "get_value" () 4 () "    double get_value ()" 2805 0  "include/amoeba/amoeba.h" "    double get_value ()" 2805]
+[ebrowse-ms "operator <" () 4 () "    bool operator<(const" 3138 0  () "  bool amoeba::point::operator< (const" 10655]
+[ebrowse-ms "operator <=" () 4 () "    bool operator<=(const" 3323 0  () "  bool amoeba::point::operator<= (const" 10548]
+[ebrowse-ms "operator =" () 0 () "    point& operator=(const" 3100 0  () "  amoeba::point& amoeba::point::operator= (const" 10267]
+[ebrowse-ms "operator ==" () 4 () "    bool operator==(const" 3509 0  () "  bool amoeba::point::operator==(const" 10761]
+[ebrowse-ms "operator >" () 4 () "    bool operator>(const" 3230 0  () "  bool amoeba::point::operator> (const" 10151]
+[ebrowse-ms "operator >=" () 4 () "    bool operator>=(const" 3416 0  () "  bool amoeba::point::operator>= (const" 10440]
+[ebrowse-ms "point" () 0 () "    point (const point& pt_);" 2679 0  () "  amoeba::point::point (const point& pt_):" 9620]
+[ebrowse-ms "point" () 0 () "    point (bool min_max_=true);" 2646 0  () "  amoeba::point::point (bool min_max_)
+  {" 9443]
+[ebrowse-ms "reinit" () 0 () "    void reinit (bool" 2928 0  () "  void amoeba::point::reinit (bool" 9980]
+[ebrowse-ms "set_amoeba" () 0 () "    void set_amoeba(amoeba" 2972 0  "include/amoeba/amoeba.h" "    void set_amoeba(amoeba" 2972]
+[ebrowse-ms "set_pos" () 0 () "    void set_pos (const" 2716 0  () "  void amoeba::point::set_pos (const" 9758]
+[ebrowse-ms "~point" () 1 () "    virtual ~point ()" 2627 0  "include/amoeba/amoeba.h" "    virtual ~point ()" 2627]
+)
+()
+()
+()
+()
+()()
+])()
+()
+()
+()
+()
+()
+()()
+][ebrowse-ts [ebrowse-cs "*Globals*" () 0() () 0"src/amoeba.cc" ]
+()([ebrowse-ms "std" () 0 () () 0 0  "tests/src/Drawer.cc" "using namespace std;" 139]
+)
+([ebrowse-ms "get_PQR_graph" () 0 "tests/src/Drawer.cc" "  TGraph* get_PQR_graph (const" 193 0  "tests/src/Drawer.cc" "  TGraph* get_PQR_graph (const" 193]
+[ebrowse-ms "save_visu" () 0 "tests/include/Drawer.h" "  void save_visu (const" 144 0  () () 0]
+)
 ()
 ()
 ([ebrowse-ms "AMOEBA_LIB_VERSION" () 512 () () 0 0  "include/amoeba/amoeba_version.h" "#define AMOEBA_LIB_VERSION " 583]
 [ebrowse-ms "AMOEBA_VERSION" () 512 () () 0 0  "include/amoeba/amoeba_version.h" "#define AMOEBA_VERSION " 327]
 [ebrowse-ms "_AMOEBA_" () 512 () () 0 0  "include/amoeba/amoeba.h" "#define _AMOEBA_
-" 34]
+" 341]
+[ebrowse-ms "__ICEDCODE_DRAWER__" () 512 () () 0 0  "tests/include/Drawer.h" "#define __ICEDCODE_DRAWER__
+" 56]
 [ebrowse-ms "__amoeba__amoeba_version_h" () 512 () () 0 0  "include/amoeba/amoeba_version.h" "#define __amoeba__amoeba_version_h " 143]
 [ebrowse-ms "__amoeba__dummy_amoeba_h" () 512 () () 0 0  "include/amoeba/dummy_amoeba.h" "#define __amoeba__dummy_amoeba_h " 289]
 [ebrowse-ms "_annealing_" () 512 () () 0 0  "include/amoeba/annealing.h" "#define _annealing_
-" 40]
+" 202]
 [ebrowse-ms "_nosy_" () 512 () () 0 0  "include/amoeba/nosy.h" "#define _nosy_
-" 30]
+" 211]
 )
 ()
 ()()

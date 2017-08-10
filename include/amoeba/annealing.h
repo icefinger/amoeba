@@ -8,8 +8,8 @@
  *
  */
 
-#ifndef _annealing_
-#define _annealing_
+#ifndef _ICEDCODE_ANNEALING_
+#define _ICEDCODE_ANNEALING_
 
 #include <nosy.h>
 
@@ -57,6 +57,7 @@ namespace icedcode
     };
 
   private:
+    virtual void __add_nose (unsigned int nb_);
     void __init_annealing ();
     virtual bool user_accept_ending ();
     double __global_temperature = -1;

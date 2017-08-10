@@ -115,6 +115,21 @@ namespace icedcode
       }
   }
 
+  void annealing::__add_nose (unsigned int nb_)
+  {
+    for (unsigned int nb=0; nb<nb_; nb++)
+      {
+        hot_nose* tmp = new hot_nose (this);
+        tmp->set_amoeba(this);
+        if (__sigma.size ())
+          tmp->SetSigma (__sigma[nb]);
+        tmp->set_temperature (__global_temperature);
+        __noses.push_back(tmp);
+      }
+  }
+
+
   size_t annealing::hot_nose::__nb_hot_noses = 0;
+
 
 }

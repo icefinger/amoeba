@@ -69,6 +69,14 @@ namespace icedcode
 
   }
 
+  void amoeba::__save_current_step ()
+  {
+    point* tocpy = new point[__PQRsize];
+    for (size_t i = 0; i<__PQRsize; i++)
+      tocpy[i] = __PQR[i];
+    __saved_steps_list.push_back (tocpy);
+  }
+
   amoeba::point amoeba::find_min ( )
   {
     __counter=0;
@@ -77,6 +85,10 @@ namespace icedcode
             (__PQR[0] - __PQR[2]).get_r () > __delta_pos) ||
            !user_accept_ending ())
       {
+        if (__save_steps)
+          __save_current_step ();
+
+
         point M_QR=__reflectP ();
 
         if (__PQR[0]< __PQR[2])
@@ -99,15 +111,9 @@ namespace icedcode
           __classify();
         __counter++;
 
-        if (__save_steps)
-          {
-            point* tocpy = new point[__PQRsize];
-            for (size_t i = 0; i<__PQRsize; i++)
-              tocpy[i] = __PQR[i];
-            __saved_steps_list.push_back (tocpy);
-          }
-
       }
+    if (__save_steps)
+      __save_current_step ();
 
     if (__debug)
       clog << "Needed "<< __counter << " steps.\n";
@@ -118,10 +124,6 @@ namespace icedcode
 
   void amoeba::flush_saved_steps ()
   {
-    for (auto& it: __saved_steps_list)
-      {
-        delete (it);
-      }
     __saved_steps_list.clear ();
   }
 
@@ -219,7 +221,8 @@ namespace icedcode
             PQRposit++;
           }
         if (has_changed)
-          __PQR[PQRit].set_pos(pos);}
+          __PQR[PQRit].set_pos(pos);
+      }
 
   }
 
@@ -245,16 +248,12 @@ namespace icedcode
   {
     __PQR[0]=(__PQR[0]-M_QR_)/__contract+M_QR_;
     __check_limits ();
-    __classify ();
   }
 
   void amoeba::__extrapolateP (point &M_QR_)
   {
-
     __PQR[0]=(__PQR[0]-M_QR_)*__extrapol+M_QR_;
     __check_limits ();
-    __classify ();
-
   }
 
   amoeba::point amoeba::__reflectP ()
@@ -454,6 +453,12 @@ namespace icedcode
       __val=numeric_limits<double>::min();
     else
       __val=numeric_limits<double>::max();
+  }
+
+  amoeba::point::point (const point& pt_): amoeba::double_1d(pt_)
+  {
+    this->__val = pt_.__val;
+    this->__am = pt_.__am;
   }
 
   void amoeba::point::set_pos (const double_1d& pos_)

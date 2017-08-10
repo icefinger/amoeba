@@ -5,6 +5,11 @@
 #include <sys/time.h>
 #include <ctime>
 #include <cmath>
+#include <Tools.h>
+
+#ifdef ENABLE_ROOT
+void save_visu (const char* file_root_, const icedcode::annealing& am_);
+#endif
 
 using namespace std;
 using namespace icedcode;
@@ -20,9 +25,9 @@ public:
   //only get_value is absolutly required. It should return the value at the coordinates in coord_ (can be illimited in dimension)
   double get_value (const double_1d& x_)
   {
-     double value=-100*(exp(-((x_[0]*x_[0]-4))/7200)+exp(-((x_[1]*x_[1]+4))/7200)-sin (x_[0]/20)-sin(x_[1]/20));
-    return value;
+    double value=global_get_value (x_.data (), 0);
 
+    return value;
   }
 
 };
@@ -30,11 +35,12 @@ public:
 
 int main (int argc_, char ** argv_) {
 
+  bool visu=false;
   bool debug=false;
   unsigned int noses=0;
   amoeba::double_1d sigma;
   int iarg = 1;
-  double sigma_val=5, temp = 400;
+  double sigma_val=50, temp = 400;
   while (iarg < argc_)
     {
       string token = argv_[iarg];
@@ -46,6 +52,14 @@ int main (int argc_, char ** argv_) {
 	    {
 	      debug = true;
 	    }
+          else if (option == "-visu")
+            {
+              visu = true;
+#ifndef ENABLE_ROOT
+              cerr << "No visu, compile with the ENABLE_ROOT=TRUE option." << endl;
+              return 0;
+#endif
+            }
 	   else if (option == "-n" || option == "--noses")
 	     {
 	       noses=atoi(argv_[++iarg]);
@@ -95,6 +109,7 @@ int main (int argc_, char ** argv_) {
   my_amoeba ma(temp);
   ma.set_debug(debug);
   ma.set_warn(false);
+  ma.set_save_steps (visu);
   //the deltas are for the resolution (1°) and the difference between the already scanned values.
   ma.set_delta(0.1,0.1);
   ma.set_starts (starts);
@@ -110,7 +125,51 @@ int main (int argc_, char ** argv_) {
 
   //the result is directly returned by find_min
   result=ma.find_min ();
+
+#ifdef ENABLE_ROOT
+  if (visu)
+    save_visu ("simpleDraw", ma);
+#endif
+
   cout << "result: " << result << endl;
 
   return 0;
 }
+
+
+#ifdef ENABLE_ROOT
+#include <Drawer.h>
+#include <TGraph.h>
+#include <TFile.h>
+#include <TCanvas.h>
+#include <TH1F.h>
+#include <TF2.h>
+
+void save_visu (const char* name_root_file_, const annealing& am_)
+{
+  TF2* f=new TF2("func", global_get_value, -180, 180, -180, 180);
+  f->SetNpx (300);
+  TCanvas *canvas = new TCanvas;
+
+  for (size_t i = 0; i<am_.get_saved_steps ().size ();i++)
+    {
+      f->Draw ();
+
+      //PQR points
+      TGraph *PQRgraph = get_PQR_graph (am_, i);
+      PQRgraph->Draw ("same");
+      //noses
+      TGraph *noses_graph = get_noses_graph (am_, i-1);
+      if (noses_graph)
+        noses_graph->Draw ("same*");
+
+      string name = name_root_file_;
+      name = name+to_string (i)+".png";
+      canvas->SaveAs (name.data());
+
+      delete (PQRgraph);
+      if (noses_graph)
+        delete (noses_graph);
+    }
+}
+#endif

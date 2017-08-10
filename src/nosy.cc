@@ -20,6 +20,7 @@ namespace icedcode
   nosy::~nosy ()
   {
     rm_noses ();
+    __saved_noses.clear ();
   }
 
   void nosy::set_noses (const double_2d &limits_)
@@ -68,9 +69,7 @@ namespace icedcode
         if (__sigma.size ())
           tmp->SetSigma (__sigma[nb]);
 
-#ifndef USE_NPROCESS
         __noses.push_back(tmp);
-#endif
       }
   }
 
@@ -90,6 +89,9 @@ namespace icedcode
 #endif
 
     has_changed = (*__noses.begin())->AnyHasChanged ();
+    if (get_save_steps ())
+      __save_noses ();
+
     (*__noses.begin ())->Reset ();
     return has_changed;
 
@@ -128,6 +130,16 @@ namespace icedcode
 
     return true;
 
+  }
+
+  void nosy::__save_noses ()
+  {
+
+    point *tmpn = new point[__noses.size ()];
+    size_t i=0;
+    for (const auto& it: __noses)
+      tmpn[i++]=*it;
+    __saved_noses.push_back(tmpn);
   }
 
   nosy::nose::nose (nosy* nose_)
@@ -182,6 +194,20 @@ namespace icedcode
         __has_been_changed|=true;
       }
   }
+
+  nosy::nose& nosy::nose::operator=(const nosy::nose& to_copy_)
+  {
+    (*(point*)(this))=to_copy_;
+
+    __id               = to_copy_.__id;
+    __sigma            = to_copy_.__sigma;
+    __total_noses      = to_copy_.__total_noses;
+    __has_been_changed = to_copy_.__has_been_changed;
+    __nosy             = to_copy_.__nosy;
+
+    return *this;
+  }
+
 
 
   size_t nosy::nose::__total_noses = 0;
